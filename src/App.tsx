@@ -1,13 +1,15 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from '@/context/AuthContext';
+import { AppRoutes } from '@/routes';
 
 export const App: React.FC = () => {
   return (
-    <div style={{ padding: '24px', fontFamily: 'var(--font-family-base)' }}>
-      <h1 style={{ color: 'var(--color-primary)' }}>Food Empire - Employee Management System</h1>
-      <p style={{ color: 'var(--text-secondary)' }}>
-        Project foundation, types, and mock data initialized.
-      </p>
-    </div>
+    <BrowserRouter>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
+    </BrowserRouter>
   );
 };
 
