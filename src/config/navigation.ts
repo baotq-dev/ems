@@ -1,0 +1,62 @@
+import { NavMenuItem } from '@/types/navigation';
+
+export const NAVIGATION_MENU: NavMenuItem[] = [
+  {
+    key: 'operation-config',
+    label: 'Operation Configuration',
+    icon: 'SlidersHorizontal',
+    children: [
+      {
+        key: 'user-list',
+        label: 'User List',
+        path: '/operation-config/user-list',
+      },
+      {
+        key: 'exam-list',
+        label: 'Exam List',
+        path: '/operation-config/exam-list',
+      },
+    ],
+  },
+  {
+    key: 'planning',
+    label: 'Planning',
+    icon: 'CalendarDays',
+    children: [
+      {
+        key: 'work-schedule',
+        label: 'Work Schedule',
+        path: '/planning/work-schedule',
+      },
+    ],
+  },
+  {
+    key: 'report',
+    label: 'Report',
+    icon: 'FolderBarChart',
+    children: [
+      {
+        key: 'attendant',
+        label: 'Attendant',
+        path: '/report/attendant',
+      },
+      {
+        key: 'sell-out-pa',
+        label: 'Sell Out PA',
+        path: '/report/sell-out-pa',
+      },
+    ],
+  },
+  {
+    key: 'system',
+    label: 'System',
+    icon: 'Settings',
+    children: [
+      {
+        key: 'notification',
+        label: 'Notification',
+        path: '/system/notification',
+      },
+    ],
+  },
+];
