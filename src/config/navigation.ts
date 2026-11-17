@@ -43,6 +43,11 @@ export const NAVIGATION_MENU: NavMenuItem[] = [
         label: 'Sell Out PA',
         path: '/report/sell-out-pa',
       },
+      {
+        key: 'exam-result',
+        label: 'Exam Result',
+        path: '/report/exam-result',
+      },
     ],
   },
   {
