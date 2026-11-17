@@ -97,7 +97,7 @@ export const MainLayout: React.FC = () => {
         {/* Left: Brand Identity */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
           <Link
-            to="/operation-config/user-list"
+            to="/dashboard/summary"
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -449,7 +449,7 @@ export const MainLayout: React.FC = () => {
         }}
       >
         <Link
-          to="/operation-config/user-list"
+          to="/dashboard/summary"
           title="Home"
           style={{
             display: 'flex',

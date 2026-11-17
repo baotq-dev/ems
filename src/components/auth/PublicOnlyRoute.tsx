@@ -6,7 +6,7 @@ export const PublicOnlyRoute: React.FC = () => {
   const { isAuthenticated } = useAuth();
 
   if (isAuthenticated) {
-    return <Navigate to="/operation-config/user-list" replace />;
+    return <Navigate to="/dashboard/summary" replace />;
   }
 
   return <Outlet />;

@@ -20,7 +20,7 @@ export const LoginPage: React.FC = () => {
 
     const result = login(username, password);
     if (result.success) {
-      navigate('/operation-config/user-list', { replace: true });
+      navigate('/dashboard/summary', { replace: true });
     } else {
       setErrorMessage(result.error || 'Invalid username or password.');
     }

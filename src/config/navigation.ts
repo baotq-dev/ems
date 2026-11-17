@@ -2,6 +2,50 @@ import { NavMenuItem } from '@/types/navigation';
 
 export const NAVIGATION_MENU: NavMenuItem[] = [
   {
+    key: 'dashboard',
+    label: 'Dashboard',
+    icon: 'Home',
+    children: [
+      {
+        key: 'dashboard-summary',
+        label: 'Dashboard Summary',
+        path: '/dashboard/summary',
+      },
+      {
+        key: 'attendant-summary',
+        label: 'Attendant Summary',
+        path: '/dashboard/attendant-summary',
+      },
+      {
+        key: 'inventory-summary',
+        label: 'Inventory Summary',
+        path: '/dashboard/inventory-summary',
+      },
+      {
+        key: 'out-of-stock-summary',
+        label: 'OS Summary',
+        path: '/dashboard/out-of-stock-summary',
+      },
+    ],
+  },
+  {
+    key: 'report',
+    label: 'Report',
+    icon: 'FolderBarChart',
+    children: [
+      {
+        key: 'attendant',
+        label: 'Attendant',
+        path: '/report/attendant',
+      },
+      {
+        key: 'sell-out-pa',
+        label: 'Sell Out PA',
+        path: '/report/sell-out-pa',
+      },
+    ],
+  },
+  {
     key: 'operation-config',
     label: 'Operation Configuration',
     icon: 'SlidersHorizontal',
@@ -27,23 +71,6 @@ export const NAVIGATION_MENU: NavMenuItem[] = [
         key: 'work-schedule',
         label: 'Work Schedule',
         path: '/planning/work-schedule',
-      },
-    ],
-  },
-  {
-    key: 'report',
-    label: 'Report',
-    icon: 'FolderBarChart',
-    children: [
-      {
-        key: 'attendant',
-        label: 'Attendant',
-        path: '/report/attendant',
-      },
-      {
-        key: 'sell-out-pa',
-        label: 'Sell Out PA',
-        path: '/report/sell-out-pa',
       },
     ],
   },
