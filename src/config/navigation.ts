@@ -44,6 +44,11 @@ export const NAVIGATION_MENU: NavMenuItem[] = [
         path: '/report/sell-out-pa',
       },
       {
+        key: 'timesheet',
+        label: 'Timesheet',
+        path: '/report/timesheet',
+      },
+      {
         key: 'exam-result',
         label: 'Exam Result',
         path: '/report/exam-result',

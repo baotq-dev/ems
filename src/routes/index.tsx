@@ -9,6 +9,7 @@ import { ExamListPage } from '@/pages/operation-config/ExamListPage';
 import { WorkSchedulePage } from '@/pages/planning/WorkSchedulePage';
 import { AttendantReportPage } from '@/pages/report/AttendantReportPage';
 import { SellOutPaReportPage } from '@/pages/report/SellOutPaReportPage';
+import { TimesheetPage } from '@/pages/report/TimesheetPage';
 import { ExamResultPage } from '@/pages/report/ExamResultPage';
 import { NotificationPage } from '@/pages/system/NotificationPage';
 import { useAuth } from '@/context/AuthContext';
@@ -43,6 +44,7 @@ export const AppRoutes: React.FC = () => {
           <Route path="/planning/work-schedule" element={<WorkSchedulePage />} />
           <Route path="/report/attendant" element={<AttendantReportPage />} />
           <Route path="/report/sell-out-pa" element={<SellOutPaReportPage />} />
+          <Route path="/report/timesheet" element={<TimesheetPage />} />
           <Route path="/report/exam-result" element={<ExamResultPage />} />
           <Route path="/system/notification" element={<NotificationPage />} />
         </Route>
