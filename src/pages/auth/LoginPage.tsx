@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Lock, User as UserIcon } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { useI18n } from '@/context/I18nContext';
 import { ACTIVE_BRAND_CONFIG } from '@/config/brandConfig';
+import { ThemeSwitcherDropdown } from '@/components/theme/ThemeSwitcherDropdown';
+import { LanguageSwitcher } from '@/components/i18n/LanguageSwitcher';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { t } = useI18n();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -22,7 +26,7 @@ export const LoginPage: React.FC = () => {
     if (result.success) {
       navigate('/dashboard/summary', { replace: true });
     } else {
-      setErrorMessage(result.error || 'Invalid username or password.');
+      setErrorMessage(result.error || t('login.error_invalid', 'Invalid username or password.'));
     }
   };
 
@@ -37,12 +41,29 @@ export const LoginPage: React.FC = () => {
       style={{
         minHeight: '100vh',
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'var(--bg-canvas)',
         padding: '16px',
+        position: 'relative',
       }}
     >
+      {/* Top Right Controls for Theme and Language */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '16px',
+          right: '16px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+        }}
+      >
+        <ThemeSwitcherDropdown />
+        <LanguageSwitcher />
+      </div>
+
       <div
         style={{
           width: '100%',
@@ -108,7 +129,7 @@ export const LoginPage: React.FC = () => {
               margin: 0,
             }}
           >
-            {ACTIVE_BRAND_CONFIG.subtitle}
+            {t('brand.subtitle', ACTIVE_BRAND_CONFIG.subtitle)}
           </p>
         </div>
 
@@ -142,7 +163,7 @@ export const LoginPage: React.FC = () => {
                 marginBottom: '6px',
               }}
             >
-              Username
+              {t('login.username', 'Username')}
             </label>
             <div style={{ position: 'relative' }}>
               <UserIcon
@@ -160,7 +181,7 @@ export const LoginPage: React.FC = () => {
                 id="login-username"
                 type="text"
                 required
-                placeholder="Enter username"
+                placeholder={t('login.username', 'Enter username')}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 style={{
@@ -191,7 +212,7 @@ export const LoginPage: React.FC = () => {
                 marginBottom: '6px',
               }}
             >
-              Password
+              {t('login.password', 'Password')}
             </label>
             <div style={{ position: 'relative' }}>
               <Lock
@@ -209,7 +230,7 @@ export const LoginPage: React.FC = () => {
                 id="login-password"
                 type={showPassword ? 'text' : 'password'}
                 required
-                placeholder="Enter password"
+                placeholder={t('login.password', 'Enter password')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 style={{
@@ -266,7 +287,7 @@ export const LoginPage: React.FC = () => {
             onMouseOver={(e) => (e.currentTarget.style.backgroundColor = 'var(--color-primary-hover)')}
             onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'var(--color-primary)')}
           >
-            Sign In
+            {t('login.button', 'Sign In')}
           </button>
         </form>
 

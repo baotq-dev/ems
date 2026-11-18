@@ -14,9 +14,12 @@ import {
   X,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { useI18n } from '@/context/I18nContext';
 import { ACTIVE_BRAND_CONFIG } from '@/config/brandConfig';
 import { NAVIGATION_MENU } from '@/config/navigation';
 import { NavMenuItem } from '@/types/navigation';
+import { ThemeSwitcherDropdown } from '@/components/theme/ThemeSwitcherDropdown';
+import { LanguageSwitcher } from '@/components/i18n/LanguageSwitcher';
 
 const ICON_MAP: Record<string, React.FC<{ size?: number; className?: string }>> = {
   SlidersHorizontal,
@@ -26,8 +29,29 @@ const ICON_MAP: Record<string, React.FC<{ size?: number; className?: string }>> 
   Settings,
 };
 
+const NAV_TRANSLATION_MAP: Record<string, string> = {
+  dashboard: 'nav.dashboard',
+  'dashboard-summary': 'nav.dashboard_summary',
+  'attendant-summary': 'nav.attendant_summary',
+  'inventory-summary': 'nav.inventory_summary',
+  'out-of-stock-summary': 'nav.out_of_stock_summary',
+  'operation-config': 'nav.operation_config',
+  'user-list': 'nav.user_list',
+  'exam-list': 'nav.exam_list',
+  planning: 'nav.planning',
+  'work-schedule': 'nav.work_schedule',
+  report: 'nav.report',
+  attendant: 'nav.attendant',
+  timesheet: 'nav.timesheet',
+  'exam-result': 'nav.exam_result',
+  'sell-out-pa': 'nav.sell_out_pa',
+  system: 'nav.system',
+  notification: 'nav.notification',
+};
+
 export const MainLayout: React.FC = () => {
   const { session, logout, switchRole } = useAuth();
+  const { t } = useI18n();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -75,6 +99,11 @@ export const MainLayout: React.FC = () => {
   const handleLogout = () => {
     logout();
     navigate('/login', { replace: true });
+  };
+
+  const getLabel = (key: string, fallback: string) => {
+    const transKey = NAV_TRANSLATION_MAP[key];
+    return transKey ? t(transKey, fallback) : fallback;
   };
 
   return (
@@ -175,7 +204,7 @@ export const MainLayout: React.FC = () => {
                     }}
                   >
                     <IconComp size={16} />
-                    <span>{item.label}</span>
+                    <span>{getLabel(item.key, item.label)}</span>
                     <ChevronDown size={14} style={{ opacity: 0.7 }} />
                   </button>
 
@@ -224,7 +253,7 @@ export const MainLayout: React.FC = () => {
                               if (!isSubActive) e.currentTarget.style.backgroundColor = 'transparent';
                             }}
                           >
-                            <span>{child.label}</span>
+                            <span>{getLabel(child.key, child.label)}</span>
                             {isSubActive && <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--color-primary)' }} />}
                           </button>
                         );
@@ -237,8 +266,16 @@ export const MainLayout: React.FC = () => {
           </nav>
         </div>
 
-        {/* Right: User Badge & Mobile Hamburger */}
+
+        {/* Right Section: User Avatar, Theme Switcher, Language Switcher, & Mobile Hamburger */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+
+          {/* Theme Switcher Button */}
+          <ThemeSwitcherDropdown />
+
+          {/* Language Switcher (VI / EN Segmented Toggle) */}
+          <LanguageSwitcher />
+
           {/* User Session Dropdown */}
           <div ref={userMenuRef} style={{ position: 'relative' }}>
             <button
@@ -305,7 +342,7 @@ export const MainLayout: React.FC = () => {
                 {switchRole && (
                   <div style={{ padding: '8px 16px', borderBottom: '1px solid var(--border-color)' }}>
                     <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginBottom: '6px' }}>
-                      Switch Role Context:
+                      {t('header.switch_role', 'Switch Role Context:')}
                     </div>
                     <div style={{ display: 'flex', gap: '4px' }}>
                       {(['Admin', 'Supervisor', 'Employee'] as const).map((r) => (
@@ -354,7 +391,7 @@ export const MainLayout: React.FC = () => {
                   onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                 >
                   <LogOut size={14} />
-                  <span>Sign Out</span>
+                  <span>{t('header.sign_out', 'Sign Out')}</span>
                 </button>
               </div>
             )}
@@ -402,7 +439,7 @@ export const MainLayout: React.FC = () => {
                   padding: '4px 0',
                 }}
               >
-                {item.label}
+                {getLabel(item.key, item.label)}
               </div>
               <div style={{ paddingLeft: '8px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
                 {item.children.map((child) => (
@@ -425,7 +462,7 @@ export const MainLayout: React.FC = () => {
                       cursor: 'pointer',
                     }}
                   >
-                    {child.label}
+                    {getLabel(child.key, child.label)}
                   </button>
                 ))}
               </div>
@@ -464,7 +501,7 @@ export const MainLayout: React.FC = () => {
         {currentParent && (
           <>
             <ChevronRight size={13} style={{ opacity: 0.5 }} />
-            <span>{currentParent.label}</span>
+            <span>{getLabel(currentParent.key, currentParent.label)}</span>
           </>
         )}
 
@@ -472,7 +509,7 @@ export const MainLayout: React.FC = () => {
           <>
             <ChevronRight size={13} style={{ opacity: 0.5 }} />
             <span style={{ color: 'var(--color-primary)', fontWeight: 600 }}>
-              {currentSubItem.label}
+              {getLabel(currentSubItem.key, currentSubItem.label)}
             </span>
           </>
         )}
