@@ -3,6 +3,7 @@ import { X, Upload, FileText, CheckCircle2 } from 'lucide-react';
 import { DailyScheduleRecord, AssignedShiftItem } from '@/types/shift';
 import { MOCK_SHIFTS, MOCK_STORES } from '@/mocks/shiftMockData';
 import { User } from '@/types/user';
+import { useI18n } from '@/context/I18nContext';
 
 interface ScheduleImportModalProps {
   isOpen: boolean;
@@ -17,6 +18,7 @@ export const ScheduleImportModal: React.FC<ScheduleImportModalProps> = ({
   onClose,
   onImportSchedules,
 }) => {
+  const { t } = useI18n();
   const [file, setFile] = useState<File | null>(null);
   const [parsedRecords, setParsedRecords] = useState<DailyScheduleRecord[]>([]);
   const [error, setError] = useState<string>('');
@@ -29,7 +31,7 @@ export const ScheduleImportModal: React.FC<ScheduleImportModalProps> = ({
     if (!selectedFile) return;
 
     if (!selectedFile.name.endsWith('.csv')) {
-      setError('Please select a valid .csv file.');
+      setError(t('schedule.import_csv_error', 'Please select a valid .csv file.'));
       return;
     }
 
@@ -41,7 +43,7 @@ export const ScheduleImportModal: React.FC<ScheduleImportModalProps> = ({
         const text = event.target?.result as string;
         const lines = text.split(/\r?\n/).filter((l) => l.trim().length > 0);
         if (lines.length < 2) {
-          setError('CSV file must contain a header row and at least one data row.');
+          setError(t('schedule.import_min_rows', 'CSV file must contain a header row and at least one data row.'));
           return;
         }
 
@@ -84,12 +86,12 @@ export const ScheduleImportModal: React.FC<ScheduleImportModalProps> = ({
 
         const list = Array.from(map.values());
         if (list.length === 0) {
-          setError('No valid schedule rows found matching existing employee codes.');
+          setError(t('schedule.import_no_valid', 'No valid schedule rows found matching existing employee codes.'));
         } else {
           setParsedRecords(list);
         }
       } catch {
-        setError('Error reading or parsing schedule CSV file.');
+        setError(t('schedule.import_read_error', 'Error reading or parsing schedule CSV file.'));
       }
     };
     reader.readAsText(selectedFile);
@@ -141,7 +143,7 @@ export const ScheduleImportModal: React.FC<ScheduleImportModalProps> = ({
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600, fontSize: '14px' }}>
             <Upload size={18} />
-            <span>Import Schedule File (.csv)</span>
+            <span>{t('schedule.import_title', 'Import Schedule File (.csv)')}</span>
           </div>
           <button
             type="button"
@@ -182,10 +184,10 @@ export const ScheduleImportModal: React.FC<ScheduleImportModalProps> = ({
             <label htmlFor="import-schedule-csv-file" style={{ cursor: 'pointer', display: 'block' }}>
               <FileText size={36} style={{ color: 'var(--color-primary)', margin: '0 auto 8px' }} />
               <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>
-                {file ? file.name : 'Click to select schedule .csv file'}
+                {file ? file.name : t('schedule.import_click_placeholder', 'Click to select schedule .csv file')}
               </div>
               <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px' }}>
-                Format: Employee Code, Date (YYYY-MM-DD), Shift Code, Store Code
+                {t('schedule.import_format_note', 'Format: Employee Code, Date (YYYY-MM-DD), Shift Code, Store Code')}
               </div>
             </label>
           </div>
@@ -219,7 +221,7 @@ export const ScheduleImportModal: React.FC<ScheduleImportModalProps> = ({
                 }}
               >
                 <CheckCircle2 size={16} />
-                <span>Parsed {parsedRecords.length} daily schedule records successfully:</span>
+                <span>{t('schedule.import_parsed_success', 'Parsed daily schedule records successfully:')} ({parsedRecords.length})</span>
               </div>
               <div
                 style={{
@@ -233,9 +235,9 @@ export const ScheduleImportModal: React.FC<ScheduleImportModalProps> = ({
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                   <thead style={{ backgroundColor: 'var(--bg-canvas)' }}>
                     <tr>
-                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>Date</th>
-                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>Employee</th>
-                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>Shifts Count</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('field.date', 'Date')}</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('field.employee', 'Employee')}</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('schedule.total_shifts', 'Shifts Count')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -247,7 +249,7 @@ export const ScheduleImportModal: React.FC<ScheduleImportModalProps> = ({
                           <td style={{ padding: '6px 8px' }}>
                             {emp ? `${emp.employeeCode} - ${emp.fullName}` : r.userId}
                           </td>
-                          <td style={{ padding: '6px 8px' }}>{r.assignedShifts.length} shift(s)</td>
+                          <td style={{ padding: '6px 8px' }}>{r.assignedShifts.length} {t('field.shift', 'shift')}(s)</td>
                         </tr>
                       );
                     })}
@@ -282,7 +284,7 @@ export const ScheduleImportModal: React.FC<ScheduleImportModalProps> = ({
               cursor: 'pointer',
             }}
           >
-            Cancel
+            {t('action.cancel', 'Cancel')}
           </button>
           <button
             type="button"
@@ -299,7 +301,7 @@ export const ScheduleImportModal: React.FC<ScheduleImportModalProps> = ({
               cursor: parsedRecords.length > 0 ? 'pointer' : 'not-allowed',
             }}
           >
-            Confirm Import ({parsedRecords.length})
+            {t('schedule.confirm_import_btn', 'Confirm Import')} ({parsedRecords.length})
           </button>
         </div>
       </div>

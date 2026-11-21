@@ -1,6 +1,8 @@
 import React from 'react';
+import { useI18n } from '@/context/I18nContext';
 
 export const NotificationPage: React.FC = () => {
+  const { t } = useI18n();
   return (
     <div
       style={{
@@ -11,10 +13,10 @@ export const NotificationPage: React.FC = () => {
       }}
     >
       <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--color-primary)', margin: '0 0 8px' }}>
-        Notification Module
+        {t('nav.notification', 'Notification')}
       </h2>
       <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: 0 }}>
-        Announcements & documents module placeholder.
+        {t('nav.notification', 'Notification')}
       </p>
     </div>
   );

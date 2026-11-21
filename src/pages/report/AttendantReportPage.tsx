@@ -18,9 +18,11 @@ import {
 import { MOCK_ATTENDANT_LOGS } from '@/mocks/attendantMockData';
 import { MOCK_USERS } from '@/mocks/users';
 import { AttendantLogRecord, FaceVerificationStatus } from '@/types/attendant';
+import { useI18n } from '@/context/I18nContext';
 
 export const AttendantReportPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useI18n();
   const [logs, setLogs] = useState<AttendantLogRecord[]>(MOCK_ATTENDANT_LOGS);
 
   // Search Collapsible State
@@ -335,7 +337,7 @@ export const AttendantReportPage: React.FC = () => {
           }}
         >
           {isSearchCollapsed ? <ChevronRight size={18} /> : <ChevronDown size={18} />}
-          <span>Search</span>
+          <span>{t('action.search', 'Search')}</span>
         </div>
 
         {!isSearchCollapsed && (
@@ -344,7 +346,7 @@ export const AttendantReportPage: React.FC = () => {
               {/* 1. Date Range */}
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>
-                  Date Range
+                  {t('field.date_range', 'Date Range')}
                 </label>
                 <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
                   <input
@@ -365,7 +367,9 @@ export const AttendantReportPage: React.FC = () => {
 
               {/* 2. Channel */}
               <div>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>Channel</label>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>
+                  {t('field.channel', 'Channel')}
+                </label>
                 <select
                   value={filterChannel}
                   onChange={(e) => setFilterChannel(e.target.value)}
@@ -379,7 +383,9 @@ export const AttendantReportPage: React.FC = () => {
 
               {/* 3. Chain */}
               <div>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>Chain</label>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>
+                  {t('field.chain', 'Chain')}
+                </label>
                 <select
                   value={filterChain}
                   onChange={(e) => setFilterChain(e.target.value)}
@@ -395,7 +401,9 @@ export const AttendantReportPage: React.FC = () => {
 
               {/* 4. Zone */}
               <div>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>Zone</label>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>
+                  {t('field.zone', 'Zone')}
+                </label>
                 <select
                   value={filterZone}
                   onChange={(e) => setFilterZone(e.target.value)}
@@ -410,7 +418,9 @@ export const AttendantReportPage: React.FC = () => {
 
               {/* 5. Province/City */}
               <div>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>Province/City</label>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>
+                  {t('field.province', 'Province/City')}
+                </label>
                 <select
                   value={filterProvince}
                   onChange={(e) => setFilterProvince(e.target.value)}
@@ -425,7 +435,9 @@ export const AttendantReportPage: React.FC = () => {
 
               {/* 6. Supervisor */}
               <div>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>Supervisor</label>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>
+                  {t('field.supervisor', 'Supervisor')}
+                </label>
                 <select
                   value={filterSupervisorId}
                   onChange={(e) => setFilterSupervisorId(e.target.value)}
@@ -440,7 +452,9 @@ export const AttendantReportPage: React.FC = () => {
 
               {/* 7. Position */}
               <div>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>Position</label>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>
+                  {t('field.position', 'Position')}
+                </label>
                 <select
                   value={filterPosition}
                   onChange={(e) => setFilterPosition(e.target.value)}
@@ -455,7 +469,9 @@ export const AttendantReportPage: React.FC = () => {
 
               {/* 8. Employee */}
               <div>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>Employee</label>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>
+                  {t('field.employee', 'Employee')}
+                </label>
                 <select
                   value={filterEmployeeId}
                   onChange={(e) => setFilterEmployeeId(e.target.value)}
@@ -470,7 +486,9 @@ export const AttendantReportPage: React.FC = () => {
 
               {/* 9. Store Code */}
               <div>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>Store Code</label>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>
+                  {t('field.store_code', 'Store Code')}
+                </label>
                 <input
                   type="text"
                   placeholder="Enter store code"
@@ -512,7 +530,7 @@ export const AttendantReportPage: React.FC = () => {
                     gap: '6px',
                   }}
                 >
-                  <Search size={15} /> Search
+                  <Search size={15} /> {t('action.search', 'Search')}
                 </button>
                 <button
                   type="button"
@@ -532,7 +550,7 @@ export const AttendantReportPage: React.FC = () => {
                     gap: '6px',
                   }}
                 >
-                  <Download size={15} /> Export File
+                  <Download size={15} /> {t('action.export_file', 'Export CSV')}
                 </button>
               </div>
 
@@ -575,7 +593,7 @@ export const AttendantReportPage: React.FC = () => {
                     gap: '6px',
                   }}
                 >
-                  <UserPlus size={15} /> Add
+                  <UserPlus size={15} /> {t('action.add', 'Add')}
                 </button>
                 <button
                   type="button"
@@ -703,20 +721,20 @@ export const AttendantReportPage: React.FC = () => {
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', textAlign: 'center' }}>
             <thead>
               <tr style={{ backgroundColor: 'var(--bg-surface)', borderBottom: '1px solid var(--border-color)' }}>
-                <th style={{ width: '40px', padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>No.</th>
+                <th style={{ width: '40px', padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>{t('table.no', 'No.')}</th>
                 <th onClick={() => handleSort('zone')} style={{ padding: '8px', cursor: 'pointer', color: 'var(--color-primary)', fontWeight: 700 }}>
                   <div style={{ display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
-                    <span>Zone</span> <ArrowUpDown size={12} />
+                    <span>{t('field.zone', 'Zone')}</span> <ArrowUpDown size={12} />
                   </div>
                 </th>
                 <th onClick={() => handleSort('chain')} style={{ padding: '8px', cursor: 'pointer', color: 'var(--color-primary)', fontWeight: 700 }}>
                   <div style={{ display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
-                    <span>Chain</span> <ArrowUpDown size={12} />
+                    <span>{t('field.chain', 'Chain')}</span> <ArrowUpDown size={12} />
                   </div>
                 </th>
                 <th onClick={() => handleSort('storeName')} style={{ padding: '8px', textAlign: 'left', cursor: 'pointer', color: 'var(--color-primary)', fontWeight: 700 }}>
                   <div style={{ display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
-                    <span>Store Name</span> <ArrowUpDown size={12} />
+                    <span>{t('field.store_name', 'Store Name')}</span> <ArrowUpDown size={12} />
                   </div>
                 </th>
                 <th style={{ padding: '8px', textAlign: 'left', color: 'var(--color-primary)', fontWeight: 700 }}>Address</th>

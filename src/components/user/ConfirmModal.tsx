@@ -1,4 +1,5 @@
 import React from 'react';
+import { useI18n } from '@/context/I18nContext';
 
 interface ConfirmModalProps {
   isOpen: boolean;
@@ -14,14 +15,16 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
   isOpen,
   title,
   message,
-  confirmLabel = 'Confirm',
+  confirmLabel,
   confirmColor = 'primary',
   onConfirm,
   onCancel,
 }) => {
+  const { t } = useI18n();
   if (!isOpen) return null;
 
   const btnBg = confirmColor === 'success' ? 'var(--color-success-accent)' : 'var(--color-primary)';
+  const resolvedConfirmLabel = confirmLabel || t('action.confirm', 'Confirm');
 
   return (
     <div
@@ -83,7 +86,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
               cursor: 'pointer',
             }}
           >
-            Cancel
+            {t('action.cancel', 'Cancel')}
           </button>
           <button
             type="button"
@@ -99,7 +102,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
               cursor: 'pointer',
             }}
           >
-            {confirmLabel}
+            {resolvedConfirmLabel}
           </button>
         </div>
       </div>

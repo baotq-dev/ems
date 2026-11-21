@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChevronLeft, ChevronRight, SquarePen, Pencil } from 'lucide-react';
 import { DailyScheduleRecord, ShiftOption } from '@/types/shift';
+import { useI18n } from '@/context/I18nContext';
 
 interface CalendarDateCell {
   date: string; // YYYY-MM-DD
@@ -38,11 +39,21 @@ export const MonthlyCalendar: React.FC<MonthlyCalendarProps> = ({
   onNextMonth,
   onOpenEditDate,
 }) => {
+  const { t } = useI18n();
+
   // Format Month/Year Title MM/YYYY
   const monthTitle = `${String(currentMonth).padStart(2, '0')}/${currentYear}`;
 
   // Weekday Headers (Monday to Sunday)
-  const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const weekdays = [
+    t('day.mon', 'Mon'),
+    t('day.tue', 'Tue'),
+    t('day.wed', 'Wed'),
+    t('day.thu', 'Thu'),
+    t('day.fri', 'Fri'),
+    t('day.sat', 'Sat'),
+    t('day.sun', 'Sun'),
+  ];
 
   // Calculate calendar grid dates
   // 1st day of the month
@@ -196,7 +207,7 @@ export const MonthlyCalendar: React.FC<MonthlyCalendarProps> = ({
             fontWeight: 600,
           }}
         >
-          Month
+          {t('field.month', 'Month')}
         </div>
       </div>
 

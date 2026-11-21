@@ -15,6 +15,7 @@ import {
 import { MOCK_EXAMS } from '@/mocks/examMockData';
 import { ExamItem, TargetExamRole } from '@/types/exam';
 import { generateExamTemplateXlsx, parseExamImportXlsx, exportExamListCsv } from '@/utils/excel';
+import { useI18n } from '@/context/I18nContext';
 
 const ALL_ROLES: TargetExamRole[] = [
   'Customer',
@@ -29,6 +30,7 @@ const ALL_ROLES: TargetExamRole[] = [
 ];
 
 export const ExamListPage: React.FC = () => {
+  const { t } = useI18n();
   const [exams, setExams] = useState<ExamItem[]>(MOCK_EXAMS);
 
   // Search Filters
@@ -216,7 +218,7 @@ export const ExamListPage: React.FC = () => {
           }}
         >
           {isSearchCollapsed ? <ChevronRight size={18} /> : <ChevronDown size={18} />}
-          <span>Search</span>
+          <span>{t('action.search', 'Search')}</span>
         </div>
 
         {!isSearchCollapsed && (
@@ -225,7 +227,7 @@ export const ExamListPage: React.FC = () => {
               {/* Date Range */}
               <div>
                 <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '4px' }}>
-                  Date Range (From - To)
+                  {t('field.date_range', 'Date Range (From - To)')}
                 </label>
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                   <input
@@ -263,7 +265,7 @@ export const ExamListPage: React.FC = () => {
               {/* Exam Select */}
               <div>
                 <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '4px' }}>
-                  Exam
+                  {t('exam.exam_name', 'Exam')}
                 </label>
                 <select
                   value={filterExamId}
@@ -278,7 +280,7 @@ export const ExamListPage: React.FC = () => {
                     backgroundColor: 'var(--bg-surface)',
                   }}
                 >
-                  <option value="">Select exam</option>
+                  <option value="">{t('exam.select_exam', 'Select exam')}</option>
                   {exams.map((ex) => (
                     <option key={ex.id} value={ex.id}>
                       {ex.examName} ({ex.fromDate} {ex.toDate ? `- ${ex.toDate}` : ''})
@@ -319,7 +321,7 @@ export const ExamListPage: React.FC = () => {
                     gap: '6px',
                   }}
                 >
-                  <Search size={15} /> Search
+                  <Search size={15} /> {t('action.search', 'Search')}
                 </button>
                 <button
                   type="button"
@@ -339,7 +341,7 @@ export const ExamListPage: React.FC = () => {
                     gap: '6px',
                   }}
                 >
-                  <Download size={15} /> Export File
+                  <Download size={15} /> {t('action.export_file', 'Export File')}
                 </button>
               </div>
 
@@ -362,7 +364,7 @@ export const ExamListPage: React.FC = () => {
                     gap: '6px',
                   }}
                 >
-                  <Download size={15} /> Template File (.xlsx)
+                  <Download size={15} /> {t('action.template_file', 'Template File (.xlsx)')}
                 </button>
 
                 <input
@@ -390,7 +392,7 @@ export const ExamListPage: React.FC = () => {
                     gap: '6px',
                   }}
                 >
-                  <Upload size={15} /> Import File (.xlsx)
+                  <Upload size={15} /> {t('action.import_file', 'Import File (.xlsx)')}
                 </button>
 
                 <button
@@ -441,7 +443,7 @@ export const ExamListPage: React.FC = () => {
           }}
         >
           <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--color-primary)' }}>
-            Showing {startIndex} to {endIndex} of {totalEntries} entries
+            {t('table.showing', 'Showing')} {startIndex} {t('table.to', 'to')} {endIndex} {t('table.of', 'of')} {totalEntries} {t('table.entries', 'entries')}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -462,7 +464,7 @@ export const ExamListPage: React.FC = () => {
                 <ChevronLeft size={14} />
               </button>
               <span style={{ fontSize: '13px', padding: '0 8px' }}>
-                Page {currentPage} of {totalPages}
+                Page {currentPage} / {totalPages}
               </span>
               <button
                 type="button"
@@ -502,12 +504,12 @@ export const ExamListPage: React.FC = () => {
             <thead>
               <tr style={{ backgroundColor: 'var(--bg-surface)', borderBottom: '1px solid var(--border-color)' }}>
                 <th style={{ width: '40px', padding: '8px' }}></th>
-                <th style={{ width: '50px', padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>No.</th>
-                <th style={{ padding: '8px', textAlign: 'left', color: 'var(--color-primary)', fontWeight: 700 }}>Exam Name</th>
-                <th style={{ width: '130px', padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>From Date</th>
-                <th style={{ width: '130px', padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>To Date</th>
-                <th style={{ width: '120px', padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>Questions</th>
-                <th style={{ width: '80px', padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>Action</th>
+                <th style={{ width: '50px', padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>{t('table.no', 'No.')}</th>
+                <th style={{ padding: '8px', textAlign: 'left', color: 'var(--color-primary)', fontWeight: 700 }}>{t('exam.exam_name', 'Exam Name')}</th>
+                <th style={{ width: '130px', padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>{t('field.from_date', 'From Date')}</th>
+                <th style={{ width: '130px', padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>{t('field.to_date', 'To Date')}</th>
+                <th style={{ width: '120px', padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>{t('exam.total_questions', 'Questions')}</th>
+                <th style={{ width: '80px', padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>{t('action.actions', 'Action')}</th>
               </tr>
               {/* Inline quick-filter */}
               <tr style={{ backgroundColor: 'var(--bg-canvas)', borderBottom: '2px solid var(--border-color)' }}>
@@ -796,7 +798,7 @@ export const ExamListPage: React.FC = () => {
       {examToDelete && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.4)', padding: '16px' }}>
           <div style={{ width: '100%', maxWidth: '420px', backgroundColor: 'var(--bg-surface)', borderRadius: 'var(--radius-sm)', borderTop: '4px solid var(--color-primary)', padding: '20px' }}>
-            <h3 style={{ margin: '0 0 8px', fontSize: '15px', fontWeight: 700 }}>Confirm Delete Exam</h3>
+            <h3 style={{ margin: '0 0 8px', fontSize: '15px', fontWeight: 700 }}>{t('exam.confirm_delete', 'Confirm Delete Exam')}</h3>
             <p style={{ margin: '0 0 20px', fontSize: '13px', color: 'var(--text-secondary)' }}>
               Are you sure you want to delete exam &quot;{examToDelete.examName}&quot;?
             </p>
@@ -806,14 +808,14 @@ export const ExamListPage: React.FC = () => {
                 onClick={() => setExamToDelete(null)}
                 style={{ padding: '6px 14px', fontSize: '13px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', backgroundColor: 'var(--bg-surface)' }}
               >
-                Cancel
+                {t('action.cancel', 'Cancel')}
               </button>
               <button
                 type="button"
                 onClick={handleConfirmDeleteExam}
                 style={{ padding: '6px 14px', fontSize: '13px', fontWeight: 600, backgroundColor: 'var(--color-primary)', color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-sm)', cursor: 'pointer' }}
               >
-                Delete
+                {t('action.delete', 'Delete')}
               </button>
             </div>
           </div>
@@ -824,7 +826,7 @@ export const ExamListPage: React.FC = () => {
       {questionToDelete && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.4)', padding: '16px' }}>
           <div style={{ width: '100%', maxWidth: '420px', backgroundColor: 'var(--bg-surface)', borderRadius: 'var(--radius-sm)', borderTop: '4px solid var(--color-primary)', padding: '20px' }}>
-            <h3 style={{ margin: '0 0 8px', fontSize: '15px', fontWeight: 700 }}>Confirm Delete Question</h3>
+            <h3 style={{ margin: '0 0 8px', fontSize: '15px', fontWeight: 700 }}>{t('exam.confirm_delete_q', 'Confirm Delete Question')}</h3>
             <p style={{ margin: '0 0 20px', fontSize: '13px', color: 'var(--text-secondary)' }}>
               Are you sure you want to delete this question from the exam?
             </p>
@@ -834,14 +836,14 @@ export const ExamListPage: React.FC = () => {
                 onClick={() => setQuestionToDelete(null)}
                 style={{ padding: '6px 14px', fontSize: '13px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', backgroundColor: 'var(--bg-surface)' }}
               >
-                Cancel
+                {t('action.cancel', 'Cancel')}
               </button>
               <button
                 type="button"
                 onClick={handleConfirmDeleteQuestion}
                 style={{ padding: '6px 14px', fontSize: '13px', fontWeight: 600, backgroundColor: 'var(--color-primary)', color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-sm)', cursor: 'pointer' }}
               >
-                Delete
+                {t('action.delete', 'Delete')}
               </button>
             </div>
           </div>

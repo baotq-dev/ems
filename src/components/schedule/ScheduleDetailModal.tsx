@@ -17,6 +17,7 @@ import {
   StoreOption,
 } from '@/types/shift';
 import { MOCK_SHIFTS, MOCK_STORES } from '@/mocks/shiftMockData';
+import { useI18n } from '@/context/I18nContext';
 
 interface ScheduleDetailModalProps {
   isOpen: boolean;
@@ -37,6 +38,7 @@ export const ScheduleDetailModal: React.FC<ScheduleDetailModalProps> = ({
   onSaveSchedule,
   onDeleteChangeRequests,
 }) => {
+  const { t } = useI18n();
   // Modal size toggle
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -257,7 +259,7 @@ export const ScheduleDetailModal: React.FC<ScheduleDetailModalProps> = ({
                     cursor: 'pointer',
                   }}
                 >
-                  <span>Working Schedule</span>
+                  <span>{t('nav.work_schedule', 'Working Schedule')}</span>
                   {scheduleCardOpen ? <Minus size={16} /> : <Plus size={16} />}
                 </div>
 
@@ -273,17 +275,17 @@ export const ScheduleDetailModal: React.FC<ScheduleDetailModalProps> = ({
                     >
                       <thead>
                         <tr style={{ backgroundColor: 'var(--bg-canvas)', borderBottom: '1px solid var(--border-color)' }}>
-                          <th style={{ padding: '6px 8px' }}>Shift</th>
-                          <th style={{ padding: '6px 8px' }}>Store</th>
-                          <th style={{ padding: '6px 8px' }}>Check-in</th>
-                          <th style={{ padding: '6px 8px', textAlign: 'center', width: '60px' }}>Action</th>
+                          <th style={{ padding: '6px 8px' }}>{t('field.shift', 'Shift')}</th>
+                          <th style={{ padding: '6px 8px' }}>{t('field.store', 'Store')}</th>
+                          <th style={{ padding: '6px 8px' }}>{t('attendant.check_in', 'Check-in')}</th>
+                          <th style={{ padding: '6px 8px', textAlign: 'center', width: '60px' }}>{t('action.actions', 'Action')}</th>
                         </tr>
                       </thead>
                       <tbody>
                         {currentAssignedShifts.length === 0 ? (
                           <tr>
                             <td colSpan={4} style={{ padding: '16px', textAlign: 'center', color: 'var(--text-secondary)' }}>
-                              No results found
+                              {t('table.no_results', 'No results found')}
                             </td>
                           </tr>
                         ) : (
@@ -372,7 +374,7 @@ export const ScheduleDetailModal: React.FC<ScheduleDetailModalProps> = ({
                     cursor: 'pointer',
                   }}
                 >
-                  <span>Schedule Change Requests</span>
+                  <span>{t('schedule.change_requests', 'Schedule Change Requests')}</span>
                   {changeReqCardOpen ? <Minus size={16} /> : <Plus size={16} />}
                 </div>
 
@@ -396,7 +398,7 @@ export const ScheduleDetailModal: React.FC<ScheduleDetailModalProps> = ({
                           cursor: selectedRequestIds.length > 0 ? 'pointer' : 'not-allowed',
                         }}
                       >
-                        Delete Request ({selectedRequestIds.length})
+                        {t('action.delete', 'Delete')} ({selectedRequestIds.length})
                       </button>
                     </div>
 
@@ -412,18 +414,18 @@ export const ScheduleDetailModal: React.FC<ScheduleDetailModalProps> = ({
                         <thead>
                           <tr style={{ backgroundColor: 'var(--bg-canvas)', borderBottom: '1px solid var(--border-color)' }}>
                             <th style={{ padding: '6px 8px', width: '30px', textAlign: 'center' }}>[✓]</th>
-                            <th style={{ padding: '6px 8px' }}>Default Shift</th>
-                            <th style={{ padding: '6px 8px' }}>Changed Shift / Time</th>
-                            <th style={{ padding: '6px 8px' }}>Reason</th>
-                            <th style={{ padding: '6px 8px' }}>Approver</th>
-                            <th style={{ padding: '6px 8px' }}>Status</th>
+                            <th style={{ padding: '6px 8px' }}>{t('schedule.default_shift', 'Default Shift')}</th>
+                            <th style={{ padding: '6px 8px' }}>{t('schedule.changed_shift', 'Changed Shift / Time')}</th>
+                            <th style={{ padding: '6px 8px' }}>{t('user.reason', 'Reason')}</th>
+                            <th style={{ padding: '6px 8px' }}>{t('schedule.approver', 'Approver')}</th>
+                            <th style={{ padding: '6px 8px' }}>{t('field.status', 'Status')}</th>
                           </tr>
                         </thead>
                         <tbody>
                           {currentChangeRequests.length === 0 ? (
                             <tr>
                               <td colSpan={6} style={{ padding: '16px', textAlign: 'center', color: 'var(--text-secondary)' }}>
-                                No results found
+                                {t('table.no_results', 'No results found')}
                               </td>
                             </tr>
                           ) : (
@@ -510,7 +512,7 @@ export const ScheduleDetailModal: React.FC<ScheduleDetailModalProps> = ({
                     cursor: 'pointer',
                   }}
                 >
-                  <span>Add Working Schedule</span>
+                  <span>{t('schedule.add_working_schedule', 'Add Working Schedule')}</span>
                   {addScheduleCardOpen ? <Minus size={16} /> : <Plus size={16} />}
                 </div>
 
@@ -544,7 +546,7 @@ export const ScheduleDetailModal: React.FC<ScheduleDetailModalProps> = ({
                           marginBottom: '4px',
                         }}
                       >
-                        Shift
+                        {t('field.shift', 'Shift')}
                       </label>
                       <select
                         id="add-schedule-shift"
@@ -560,7 +562,7 @@ export const ScheduleDetailModal: React.FC<ScheduleDetailModalProps> = ({
                           backgroundColor: 'var(--bg-surface)',
                         }}
                       >
-                        <option value="">Select shift</option>
+                        <option value="">{t('schedule.select_shift', 'Select shift')}</option>
                         {MOCK_SHIFTS.map((s) => (
                           <option key={s.id} value={s.id}>
                             {s.code} - {s.name} ({s.startTime} - {s.endTime})
@@ -581,7 +583,7 @@ export const ScheduleDetailModal: React.FC<ScheduleDetailModalProps> = ({
                           marginBottom: '4px',
                         }}
                       >
-                        Store
+                        {t('field.store', 'Store')}
                       </label>
                       <select
                         id="add-schedule-store"
@@ -597,7 +599,7 @@ export const ScheduleDetailModal: React.FC<ScheduleDetailModalProps> = ({
                           backgroundColor: 'var(--bg-surface)',
                         }}
                       >
-                        <option value="">Select store</option>
+                        <option value="">{t('field.select_store', 'Select store')}</option>
                         {MOCK_STORES.map((st) => (
                           <option key={st.id} value={st.id}>
                             {st.name}
@@ -628,7 +630,7 @@ export const ScheduleDetailModal: React.FC<ScheduleDetailModalProps> = ({
                         }}
                       >
                         <ChevronDown size={16} />
-                        <span>Stage Store</span>
+                        <span>{t('schedule.stage_store', 'Stage Store')}</span>
                       </button>
                     </div>
 
@@ -644,7 +646,7 @@ export const ScheduleDetailModal: React.FC<ScheduleDetailModalProps> = ({
                         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px' }}>
                           <thead style={{ backgroundColor: 'var(--bg-canvas)' }}>
                             <tr>
-                              <th style={{ padding: '6px 8px', textAlign: 'left', fontWeight: 600 }}>Store Name</th>
+                              <th style={{ padding: '6px 8px', textAlign: 'left', fontWeight: 600 }}>{t('field.store_name', 'Store Name')}</th>
                               <th style={{ padding: '6px 8px', width: '30px', textAlign: 'center' }}></th>
                             </tr>
                           </thead>
@@ -652,7 +654,7 @@ export const ScheduleDetailModal: React.FC<ScheduleDetailModalProps> = ({
                             {stagedStores.length === 0 ? (
                               <tr>
                                 <td colSpan={2} style={{ padding: '12px', textAlign: 'center', color: 'var(--text-secondary)' }}>
-                                  No results found
+                                  {t('table.no_results', 'No results found')}
                                 </td>
                               </tr>
                             ) : (
@@ -704,7 +706,7 @@ export const ScheduleDetailModal: React.FC<ScheduleDetailModalProps> = ({
                       }}
                     >
                       <Save size={16} />
-                      <span>Save</span>
+                      <span>{t('action.save', 'Save')}</span>
                     </button>
                   </form>
                 )}
@@ -736,7 +738,7 @@ export const ScheduleDetailModal: React.FC<ScheduleDetailModalProps> = ({
               cursor: 'pointer',
             }}
           >
-            Close
+            {t('action.close', 'Close')}
           </button>
         </div>
       </div>

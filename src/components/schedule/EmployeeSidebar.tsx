@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChevronRight } from 'lucide-react';
 import { User } from '@/types/user';
+import { useI18n } from '@/context/I18nContext';
 
 interface EmployeeSidebarProps {
   employees: User[];
@@ -13,6 +14,7 @@ export const EmployeeSidebar: React.FC<EmployeeSidebarProps> = ({
   selectedEmployeeId,
   onSelectEmployee,
 }) => {
+  const { t } = useI18n();
   return (
     <div
       style={{
@@ -97,7 +99,7 @@ export const EmployeeSidebar: React.FC<EmployeeSidebarProps> = ({
           borderBottom: '1px solid var(--border-color)',
         }}
       >
-        Employees ({employees.length})
+        {t('schedule.employee_list', 'Employees')} ({employees.length})
       </div>
 
       {/* Scrollable Employee List */}
@@ -117,7 +119,7 @@ export const EmployeeSidebar: React.FC<EmployeeSidebarProps> = ({
               fontSize: '13px',
             }}
           >
-            No employees found
+            {t('table.no_results', 'No employees found')}
           </div>
         ) : (
           employees.map((emp) => {

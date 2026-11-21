@@ -2,8 +2,10 @@ import React, { useState, useMemo } from 'react';
 import { Search } from 'lucide-react';
 import { MOCK_ATTENDANT_LOGS } from '@/mocks/attendantMockData';
 import { MOCK_USERS } from '@/mocks/users';
+import { useI18n } from '@/context/I18nContext';
 
 export const AttendantSummaryPage: React.FC = () => {
+  const { t } = useI18n();
   // Filters
   const [fromDate, setFromDate] = useState('2026-11-10');
   const [toDate, setToDate] = useState('2026-11-20');
@@ -155,7 +157,7 @@ export const AttendantSummaryPage: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
           {/* Date Range */}
           <div>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>Date Range</label>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>{t('field.date_range', 'Date Range')}</label>
             <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
               <input
                 type="date"
@@ -175,13 +177,13 @@ export const AttendantSummaryPage: React.FC = () => {
 
           {/* Zone */}
           <div>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>Zone</label>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>{t('field.zone', 'Zone')}</label>
             <select
               value={zone}
               onChange={(e) => setZone(e.target.value)}
               style={{ width: '100%', height: '30px', padding: '0 6px', fontSize: '12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}
             >
-              <option value="">Select zone</option>
+              <option value="">{t('field.all_zones', 'Select zone')}</option>
               <option value="A">Zone A</option>
               <option value="B">Zone B</option>
               <option value="C">Zone C</option>
@@ -190,13 +192,13 @@ export const AttendantSummaryPage: React.FC = () => {
 
           {/* Chain */}
           <div>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>Chain</label>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>{t('field.chain', 'Chain')}</label>
             <select
               value={chain}
               onChange={(e) => setChain(e.target.value)}
               style={{ width: '100%', height: '30px', padding: '0 6px', fontSize: '12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}
             >
-              <option value="">Select chain</option>
+              <option value="">{t('field.all_chains', 'Select chain')}</option>
               <option value="Emart">Emart</option>
               <option value="Co.opmart">Co.opmart</option>
               <option value="WinMart">WinMart</option>
@@ -206,13 +208,13 @@ export const AttendantSummaryPage: React.FC = () => {
 
           {/* Supervisor */}
           <div>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>Supervisor</label>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>{t('field.supervisor', 'Supervisor')}</label>
             <select
               value={supervisorId}
               onChange={(e) => setSupervisorId(e.target.value)}
               style={{ width: '100%', height: '30px', padding: '0 6px', fontSize: '12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}
             >
-              <option value="">Select supervisor</option>
+              <option value="">{t('field.select_supervisor', 'Select supervisor')}</option>
               {supervisors.map((s) => (
                 <option key={s.id} value={s.id}>{s.fullName}</option>
               ))}
@@ -224,13 +226,13 @@ export const AttendantSummaryPage: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {/* Store */}
           <div>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>Store</label>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>{t('field.store', 'Store')}</label>
             <select
               value={store}
               onChange={(e) => setStore(e.target.value)}
               style={{ width: '100%', height: '30px', padding: '0 6px', fontSize: '12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}
             >
-              <option value="">Select store</option>
+              <option value="">{t('field.select_store', 'Select store')}</option>
               <option value="EMART PHAN VAN TRI">EMART PHAN VAN TRI</option>
               <option value="CO.OPMART NGUYEN DINH CHIEU">CO.OPMART NGUYEN DINH CHIEU</option>
               <option value="WINMART LE THANH TON">WINMART LE THANH TON</option>
@@ -240,15 +242,15 @@ export const AttendantSummaryPage: React.FC = () => {
 
           {/* Group By */}
           <div>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>Group By</label>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>{t('field.group_by', 'Group By')}</label>
             <select
               value={groupBy}
               onChange={(e) => setGroupBy(e.target.value as any)}
               style={{ width: '100%', height: '30px', padding: '0 6px', fontSize: '12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}
             >
-              <option value="By Employee">By Employee</option>
-              <option value="By Store">By Store</option>
-              <option value="By Supervisor">By Supervisor</option>
+              <option value="By Employee">{t('field.by_employee', 'By Employee')}</option>
+              <option value="By Store">{t('field.by_store', 'By Store')}</option>
+              <option value="By Supervisor">{t('field.by_supervisor', 'By Supervisor')}</option>
             </select>
           </div>
 
@@ -271,7 +273,7 @@ export const AttendantSummaryPage: React.FC = () => {
                 gap: '6px',
               }}
             >
-              <Search size={15} /> Search
+              <Search size={15} /> {t('action.search', 'Search')}
             </button>
           </div>
         </div>
@@ -289,20 +291,20 @@ export const AttendantSummaryPage: React.FC = () => {
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
           <h3 style={{ margin: 0, fontSize: '14px', fontWeight: 700, color: 'var(--color-primary)' }}>
-            Daily PA Attendance Statistics
+            {t('attendant.daily_pa_stats', 'Daily PA Attendance Statistics')}
           </h3>
           <div style={{ display: 'flex', gap: '12px', fontSize: '11px', fontWeight: 600 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <div style={{ width: '10px', height: '10px', backgroundColor: '#0284C7' }} />
-              <span>Scheduled Users</span>
+              <span>{t('attendant.scheduled_users', 'Scheduled Users')}</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <div style={{ width: '10px', height: '10px', backgroundColor: '#2E7D32' }} />
-              <span>Checked-in Users</span>
+              <span>{t('attendant.checked_in_users', 'Checked-in Users')}</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <div style={{ width: '10px', height: '2px', backgroundColor: 'var(--color-primary)' }} />
-              <span>Attendance Rate (%)</span>
+              <span>{t('attendant.attendance_rate', 'Attendance Rate (%)')}</span>
             </div>
           </div>
         </div>
@@ -376,20 +378,20 @@ export const AttendantSummaryPage: React.FC = () => {
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
           <h3 style={{ margin: 0, fontSize: '14px', fontWeight: 700, color: 'var(--color-primary)' }}>
-            Daily Supervisor Attendance Statistics
+            {t('attendant.daily_sup_stats', 'Daily Supervisor Attendance Statistics')}
           </h3>
           <div style={{ display: 'flex', gap: '12px', fontSize: '11px', fontWeight: 600 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <div style={{ width: '10px', height: '10px', backgroundColor: '#0284C7' }} />
-              <span>Scheduled Users</span>
+              <span>{t('attendant.scheduled_users', 'Scheduled Users')}</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <div style={{ width: '10px', height: '10px', backgroundColor: '#2E7D32' }} />
-              <span>Checked-in Users</span>
+              <span>{t('attendant.checked_in_users', 'Checked-in Users')}</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <div style={{ width: '10px', height: '2px', backgroundColor: 'var(--color-primary)' }} />
-              <span>Attendance Rate (%)</span>
+              <span>{t('attendant.attendance_rate', 'Attendance Rate (%)')}</span>
             </div>
           </div>
         </div>
@@ -554,19 +556,19 @@ export const AttendantSummaryPage: React.FC = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <div style={{ width: '12px', height: '12px', backgroundColor: '#2E7D32', borderRadius: '50%' }} />
             <span style={{ fontSize: '12px', fontWeight: 600 }}>
-              Matched: <strong style={{ color: '#2E7D32' }}>{verificationCounts.matched}</strong> ({verificationCounts.matchedPct}%)
+              {t('attendant.matched', 'Matched')}: <strong style={{ color: '#2E7D32' }}>{verificationCounts.matched}</strong> ({verificationCounts.matchedPct}%)
             </span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <div style={{ width: '12px', height: '12px', backgroundColor: '#F59E0B', borderRadius: '50%' }} />
             <span style={{ fontSize: '12px', fontWeight: 600 }}>
-              Mismatched: <strong style={{ color: '#F59E0B' }}>{verificationCounts.mismatched}</strong> ({verificationCounts.mismatchedPct}%)
+              {t('attendant.mismatched', 'Mismatched')}: <strong style={{ color: '#F59E0B' }}>{verificationCounts.mismatched}</strong> ({verificationCounts.mismatchedPct}%)
             </span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <div style={{ width: '12px', height: '12px', backgroundColor: 'var(--color-primary)', borderRadius: '50%' }} />
             <span style={{ fontSize: '12px', fontWeight: 600 }}>
-              Scan Failed: <strong style={{ color: 'var(--color-primary)' }}>{verificationCounts.scanFailed}</strong> ({verificationCounts.scanFailedPct}%)
+              {t('attendant.scan_failed', 'Scan Failed')}: <strong style={{ color: 'var(--color-primary)' }}>{verificationCounts.scanFailed}</strong> ({verificationCounts.scanFailedPct}%)
             </span>
           </div>
         </div>
@@ -584,7 +586,7 @@ export const AttendantSummaryPage: React.FC = () => {
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
           <h3 style={{ margin: 0, fontSize: '14px', fontWeight: 700, color: 'var(--color-primary)' }}>
-            Attendance Statistics by Supervisor
+            {t('attendant.attendance_by_supervisor', 'Attendance Statistics by Supervisor')}
           </h3>
 
           {/* Role Tab Switcher: PA | SUP */}

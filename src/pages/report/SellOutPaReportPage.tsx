@@ -16,6 +16,7 @@ import { SellOutReportRecord } from '@/types/sellOut';
 import { MOCK_SELL_OUT_RECORDS } from '@/mocks/sellOutMockData';
 import { MOCK_USERS } from '@/mocks/users';
 import { CreateSellOutModal } from '@/components/sellOut/CreateSellOutModal';
+import { useI18n } from '@/context/I18nContext';
 
 type SortField =
   | 'zoneCode'
@@ -29,6 +30,8 @@ type SortField =
 type SortDirection = 'asc' | 'desc';
 
 export const SellOutPaReportPage: React.FC = () => {
+  const { t } = useI18n();
+
   // Master records state initialized with mock data
   const [records, setRecords] = useState<SellOutReportRecord[]>(MOCK_SELL_OUT_RECORDS);
 
@@ -389,7 +392,7 @@ export const SellOutPaReportPage: React.FC = () => {
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600, fontSize: '14px' }}>
             <Search size={16} />
-            <span>Search</span>
+            <span>{t('action.search', 'Search')}</span>
           </div>
           <div>
             {isSearchExpanded ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
@@ -410,7 +413,7 @@ export const SellOutPaReportPage: React.FC = () => {
               {/* 1. Date Range */}
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '5px' }}>
-                  Date Range
+                  {t('field.date_range', 'Date Range')}
                 </label>
                 <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
                   <input
@@ -448,7 +451,7 @@ export const SellOutPaReportPage: React.FC = () => {
               {/* 2. Channel */}
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '5px' }}>
-                  Channel
+                  {t('field.channel', 'Channel')}
                 </label>
                 <select
                   value={filterChannel}
@@ -463,7 +466,7 @@ export const SellOutPaReportPage: React.FC = () => {
                     color: 'var(--text-primary)',
                   }}
                 >
-                  <option value="">All Channels</option>
+                  <option value="">{t('field.all_channels', 'All Channels')}</option>
                   {channelOptions.map((ch) => (
                     <option key={ch} value={ch}>
                       {ch}
@@ -475,7 +478,7 @@ export const SellOutPaReportPage: React.FC = () => {
               {/* 3. Chain */}
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '5px' }}>
-                  Chain
+                  {t('field.chain', 'Chain')}
                 </label>
                 <select
                   value={filterChain}
@@ -490,7 +493,7 @@ export const SellOutPaReportPage: React.FC = () => {
                     color: 'var(--text-primary)',
                   }}
                 >
-                  <option value="">All Chains</option>
+                  <option value="">{t('field.all_chains', 'All Chains')}</option>
                   {chainOptions.map((c) => (
                     <option key={c} value={c}>
                       {c}
@@ -502,7 +505,7 @@ export const SellOutPaReportPage: React.FC = () => {
               {/* 4. Zone */}
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '5px' }}>
-                  Zone
+                  {t('field.zone', 'Zone')}
                 </label>
                 <select
                   value={filterZone}
@@ -517,7 +520,7 @@ export const SellOutPaReportPage: React.FC = () => {
                     color: 'var(--text-primary)',
                   }}
                 >
-                  <option value="">All Zones</option>
+                  <option value="">{t('field.all_zones', 'All Zones')}</option>
                   {zoneOptions.map((z) => (
                     <option key={z} value={z}>
                       {z}
@@ -529,7 +532,7 @@ export const SellOutPaReportPage: React.FC = () => {
               {/* 5. Province/City */}
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '5px' }}>
-                  Province/City
+                  {t('field.province', 'Province/City')}
                 </label>
                 <select
                   value={filterProvince}
@@ -544,7 +547,7 @@ export const SellOutPaReportPage: React.FC = () => {
                     color: 'var(--text-primary)',
                   }}
                 >
-                  <option value="">All Provinces</option>
+                  <option value="">{t('field.all_provinces', 'All Provinces')}</option>
                   {provinceOptions.map((p) => (
                     <option key={p} value={p}>
                       {p}
@@ -556,7 +559,7 @@ export const SellOutPaReportPage: React.FC = () => {
               {/* 6. Supervisor */}
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '5px' }}>
-                  Supervisor
+                  {t('field.supervisor', 'Supervisor')}
                 </label>
                 <select
                   value={filterSupervisor}
@@ -571,7 +574,7 @@ export const SellOutPaReportPage: React.FC = () => {
                     color: 'var(--text-primary)',
                   }}
                 >
-                  <option value="">All Supervisors</option>
+                  <option value="">{t('field.all_supervisors', 'All Supervisors')}</option>
                   {supervisorOptions.map((s) => (
                     <option key={s} value={s}>
                       {s}
@@ -583,7 +586,7 @@ export const SellOutPaReportPage: React.FC = () => {
               {/* 7. Position */}
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '5px' }}>
-                  Position
+                  {t('field.position', 'Position')}
                 </label>
                 <select
                   value={filterPosition}
@@ -598,7 +601,7 @@ export const SellOutPaReportPage: React.FC = () => {
                     color: 'var(--text-primary)',
                   }}
                 >
-                  <option value="">All Positions</option>
+                  <option value="">{t('field.all_positions', 'All Positions')}</option>
                   {positionOptions.map((pos) => (
                     <option key={pos} value={pos}>
                       {pos}
@@ -610,7 +613,7 @@ export const SellOutPaReportPage: React.FC = () => {
               {/* 8. Employee */}
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '5px' }}>
-                  Employee
+                  {t('field.employee', 'Employee')}
                 </label>
                 <select
                   value={filterEmployee}
@@ -625,7 +628,7 @@ export const SellOutPaReportPage: React.FC = () => {
                     color: 'var(--text-primary)',
                   }}
                 >
-                  <option value="">All Employees</option>
+                  <option value="">{t('field.all_employees', 'All Employees')}</option>
                   {employeeOptions.map((emp) => (
                     <option key={emp.id} value={emp.id}>
                       {emp.employeeCode} - {emp.fullName}
@@ -637,11 +640,11 @@ export const SellOutPaReportPage: React.FC = () => {
               {/* 9. Store Code */}
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '5px' }}>
-                  Store Code
+                  {t('field.store_code', 'Store Code')}
                 </label>
                 <input
                   type="text"
-                  placeholder="Enter store code"
+                  placeholder={t('field.store_code', 'Enter store code')}
                   value={filterStoreCode}
                   onChange={(e) => setFilterStoreCode(e.target.value)}
                   style={{
@@ -689,7 +692,7 @@ export const SellOutPaReportPage: React.FC = () => {
                   }}
                 >
                   <Search size={14} />
-                  <span>Search</span>
+                  <span>{t('action.search', 'Search')}</span>
                 </button>
                 <button
                   type="button"
@@ -709,7 +712,7 @@ export const SellOutPaReportPage: React.FC = () => {
                   }}
                 >
                   <Download size={14} />
-                  <span>Export File</span>
+                  <span>{t('action.export_file', 'Export File')}</span>
                 </button>
               </div>
 
@@ -732,7 +735,7 @@ export const SellOutPaReportPage: React.FC = () => {
                   }}
                 >
                   <Plus size={15} />
-                  <span>Add</span>
+                  <span>{t('action.add', 'Add')}</span>
                 </button>
               </div>
             </div>
@@ -765,14 +768,18 @@ export const SellOutPaReportPage: React.FC = () => {
           }}
         >
           <div>
-            Showing <strong style={{ color: 'var(--text-primary)' }}>{totalEntries === 0 ? 0 : startIndex + 1}</strong> to{' '}
-            <strong style={{ color: 'var(--text-primary)' }}>{endIndex}</strong> of{' '}
-            <strong style={{ color: 'var(--text-primary)' }}>{totalEntries}</strong> entries
+            {t('table.showing', 'Showing')}{' '}
+            <strong style={{ color: 'var(--text-primary)' }}>{totalEntries === 0 ? 0 : startIndex + 1}</strong>{' '}
+            {t('table.to', 'to')}{' '}
+            <strong style={{ color: 'var(--text-primary)' }}>{endIndex}</strong>{' '}
+            {t('table.of', 'of')}{' '}
+            <strong style={{ color: 'var(--text-primary)' }}>{totalEntries}</strong>{' '}
+            {t('table.entries', 'entries')}
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span>Show</span>
+              <span>{t('table.show', 'Show')}</span>
               <select
                 value={pageSize}
                 onChange={(e) => {
@@ -792,7 +799,7 @@ export const SellOutPaReportPage: React.FC = () => {
                 <option value={20}>20</option>
                 <option value={50}>50</option>
               </select>
-              <span>entries</span>
+              <span>{t('table.entries', 'entries')}</span>
             </div>
 
             {/* Pagination buttons */}
@@ -899,13 +906,13 @@ export const SellOutPaReportPage: React.FC = () => {
                 }}
               >
                 <th style={{ padding: '9px 10px', width: '38px', textAlign: 'center' }}></th>
-                <th style={{ padding: '9px 10px', width: '40px', textAlign: 'center' }}>No.</th>
+                <th style={{ padding: '9px 10px', width: '40px', textAlign: 'center' }}>{t('table.no', 'No.')}</th>
                 <th
                   onClick={() => handleSort('zoneCode')}
                   style={{ padding: '9px 10px', width: '85px', cursor: 'pointer', userSelect: 'none' }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <span>Zone</span>
+                    <span>{t('field.zone', 'Zone')}</span>
                     {renderSortIcon('zoneCode')}
                   </div>
                 </th>
@@ -914,7 +921,7 @@ export const SellOutPaReportPage: React.FC = () => {
                   style={{ padding: '9px 10px', width: '105px', cursor: 'pointer', userSelect: 'none' }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <span>Chain</span>
+                    <span>{t('field.chain', 'Chain')}</span>
                     {renderSortIcon('chain')}
                   </div>
                 </th>
@@ -923,7 +930,7 @@ export const SellOutPaReportPage: React.FC = () => {
                   style={{ padding: '9px 10px', minWidth: '180px', cursor: 'pointer', userSelect: 'none' }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <span>Store Name</span>
+                    <span>{t('field.store_name', 'Store Name')}</span>
                     {renderSortIcon('storeName')}
                   </div>
                 </th>
@@ -932,7 +939,7 @@ export const SellOutPaReportPage: React.FC = () => {
                   style={{ padding: '9px 10px', minWidth: '220px', cursor: 'pointer', userSelect: 'none' }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <span>Address</span>
+                    <span>{t('field.address', 'Address')}</span>
                     {renderSortIcon('storeAddress')}
                   </div>
                 </th>
@@ -941,7 +948,7 @@ export const SellOutPaReportPage: React.FC = () => {
                   style={{ padding: '9px 10px', minWidth: '170px', cursor: 'pointer', userSelect: 'none' }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <span>Employee Name</span>
+                    <span>{t('field.employee_name', 'Employee Name')}</span>
                     {renderSortIcon('employeeName')}
                   </div>
                 </th>
@@ -950,7 +957,7 @@ export const SellOutPaReportPage: React.FC = () => {
                   style={{ padding: '9px 10px', minWidth: '130px', cursor: 'pointer', userSelect: 'none' }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <span>Date</span>
+                    <span>{t('field.date', 'Date')}</span>
                     {renderSortIcon('recordedAt')}
                   </div>
                 </th>
@@ -965,7 +972,7 @@ export const SellOutPaReportPage: React.FC = () => {
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <span>Total</span>
+                    <span>{t('field.total', 'Total')}</span>
                     {renderSortIcon('totalQuantity')}
                   </div>
                 </th>
@@ -1106,7 +1113,7 @@ export const SellOutPaReportPage: React.FC = () => {
                       fontSize: '13px',
                     }}
                   >
-                    No sell-out records found
+                    {t('table.no_results', 'No sell-out records found')}
                   </td>
                 </tr>
               ) : (
@@ -1257,7 +1264,7 @@ export const SellOutPaReportPage: React.FC = () => {
                                   borderBottom: '1px solid var(--border-color)',
                                 }}
                               >
-                                Line Item Breakdown ({r.items.length} SKUs)
+                                {t('sellout.line_breakdown', 'Line Item Breakdown')} ({r.items.length} SKUs)
                               </div>
                               <table
                                 style={{
@@ -1275,14 +1282,14 @@ export const SellOutPaReportPage: React.FC = () => {
                                       borderBottom: '1px solid var(--border-color)',
                                     }}
                                   >
-                                    <th style={{ padding: '6px 10px', width: '35px', textAlign: 'center' }}>No.</th>
-                                    <th style={{ padding: '6px 10px', width: '110px' }}>Category</th>
-                                    <th style={{ padding: '6px 10px', width: '160px' }}>Product Group</th>
-                                    <th style={{ padding: '6px 10px', width: '100px' }}>Product Code</th>
-                                    <th style={{ padding: '6px 10px' }}>Product Name</th>
-                                    <th style={{ padding: '6px 10px', width: '80px', textAlign: 'center' }}>Quantity</th>
-                                    <th style={{ padding: '6px 10px', width: '80px', textAlign: 'center' }}>OSA</th>
-                                    <th style={{ padding: '6px 10px', minWidth: '150px' }}>Note</th>
+                                    <th style={{ padding: '6px 10px', width: '35px', textAlign: 'center' }}>{t('table.no', 'No.')}</th>
+                                    <th style={{ padding: '6px 10px', width: '110px' }}>{t('field.category', 'Category')}</th>
+                                    <th style={{ padding: '6px 10px', width: '160px' }}>{t('field.product_group', 'Product Group')}</th>
+                                    <th style={{ padding: '6px 10px', width: '100px' }}>{t('field.product_code', 'Product Code')}</th>
+                                    <th style={{ padding: '6px 10px' }}>{t('field.product_name', 'Product Name')}</th>
+                                    <th style={{ padding: '6px 10px', width: '80px', textAlign: 'center' }}>{t('field.quantity', 'Quantity')}</th>
+                                    <th style={{ padding: '6px 10px', width: '80px', textAlign: 'center' }}>{t('field.osa', 'OSA')}</th>
+                                    <th style={{ padding: '6px 10px', minWidth: '150px' }}>{t('field.note', 'Note')}</th>
                                   </tr>
                                 </thead>
                                 <tbody>

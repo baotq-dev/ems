@@ -1,5 +1,6 @@
 import React from 'react';
 import { ChevronsLeft, ChevronLeft, ChevronRight, ChevronsRight } from 'lucide-react';
+import { useI18n } from '@/context/I18nContext';
 
 interface UserPaginationProps {
   currentPage: number;
@@ -16,6 +17,7 @@ export const UserPagination: React.FC<UserPaginationProps> = ({
   onPageChange,
   onPageSizeChange,
 }) => {
+  const { t } = useI18n();
   const totalPages = Math.max(1, Math.ceil(totalEntries / pageSize));
   const startIndex = totalEntries === 0 ? 0 : (currentPage - 1) * pageSize + 1;
   const endIndex = Math.min(totalEntries, currentPage * pageSize);
@@ -56,7 +58,7 @@ export const UserPagination: React.FC<UserPaginationProps> = ({
           color: 'var(--color-primary)',
         }}
       >
-        Showing {startIndex} to {endIndex} of {totalEntries} entries
+        {t('table.showing', 'Showing')} {startIndex} {t('table.to', 'to')} {endIndex} {t('table.of', 'of')} {totalEntries} {t('table.entries', 'entries')}
       </div>
 
       {/* Pagination Controls & Page Size Selector */}
@@ -179,7 +181,7 @@ export const UserPagination: React.FC<UserPaginationProps> = ({
 
         {/* Page Size Selector */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', color: 'var(--text-secondary)' }}>
-          <span>Page size:</span>
+          <span>{t('table.page_size', 'Page size')}:</span>
           <select
             value={pageSize}
             onChange={(e) => onPageSizeChange(Number(e.target.value))}

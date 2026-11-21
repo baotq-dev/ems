@@ -1,6 +1,8 @@
 import React from 'react';
+import { useI18n } from '@/context/I18nContext';
 
 export const InventorySummaryPage: React.FC = () => {
+  const { t } = useI18n();
   return (
     <div
       style={{
@@ -11,10 +13,10 @@ export const InventorySummaryPage: React.FC = () => {
       }}
     >
       <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--color-primary)', margin: '0 0 8px' }}>
-        Inventory Summary Module
+        {t('nav.inventory_summary', 'Inventory Summary')}
       </h2>
       <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: 0 }}>
-        Inventory Summary module placeholder.
+        {t('nav.inventory_summary', 'Inventory Summary')}
       </p>
     </div>
   );

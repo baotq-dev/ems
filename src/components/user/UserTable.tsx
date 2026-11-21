@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowUpDown, Pencil, Trash2, RotateCw } from 'lucide-react';
 import { User } from '@/types/user';
 import { formatDateToDMY } from '@/utils/date';
+import { useI18n } from '@/context/I18nContext';
 
 export type SortField =
   | 'region'
@@ -59,6 +60,8 @@ export const UserTable: React.FC<UserTableProps> = ({
   onDeleteUser,
   onResetPassword,
 }) => {
+  const { t } = useI18n();
+
   const getResignDateStr = (user: User): string => {
     if (user.employmentStatus !== 'Resigned') return '';
     const resignRecord = [...user.statusHistory].reverse().find((s) => s.status === 'Resigned');
@@ -148,20 +151,20 @@ export const UserTable: React.FC<UserTableProps> = ({
                 borderRight: '1px solid var(--border-color)',
               }}
             >
-              No.
+              {t('table.no', 'No.')}
             </th>
-            {renderSortHeader('Region', 'region')}
-            {renderSortHeader('Province/City', 'workProvince')}
-            {renderSortHeader('Province/City (New)', 'newWorkProvince')}
-            {renderSortHeader('Employee Code', 'employeeCode')}
-            {renderSortHeader('Supervisor', 'currentSupervisorName')}
-            {renderSortHeader('Full Name', 'fullName')}
-            {renderSortHeader('ID / CCCD', 'identityNumber')}
-            {renderSortHeader('Position', 'currentPosition')}
-            {renderSortHeader('Username', 'username')}
-            {renderSortHeader('Employment Status', 'employmentStatus')}
-            {renderSortHeader('Join Date', 'joinDate')}
-            {renderSortHeader('Resign Date', 'resignDate')}
+            {renderSortHeader(t('field.region', 'Region'), 'region')}
+            {renderSortHeader(t('field.province', 'Province/City'), 'workProvince')}
+            {renderSortHeader(t('field.province_new', 'Province/City (New)'), 'newWorkProvince')}
+            {renderSortHeader(t('field.employee_code', 'Employee Code'), 'employeeCode')}
+            {renderSortHeader(t('field.supervisor', 'Supervisor'), 'currentSupervisorName')}
+            {renderSortHeader(t('field.full_name', 'Full Name'), 'fullName')}
+            {renderSortHeader(t('field.identity_number', 'ID / CCCD'), 'identityNumber')}
+            {renderSortHeader(t('field.position', 'Position'), 'currentPosition')}
+            {renderSortHeader(t('login.username', 'Username'), 'username')}
+            {renderSortHeader(t('field.employment_status', 'Employment Status'), 'employmentStatus')}
+            {renderSortHeader(t('field.join_date', 'Join Date'), 'joinDate')}
+            {renderSortHeader(t('field.resign_date', 'Resign Date'), 'resignDate')}
             <th
               style={{
                 padding: '10px 8px',
@@ -172,13 +175,13 @@ export const UserTable: React.FC<UserTableProps> = ({
                 width: '110px',
               }}
             >
-              Actions
+              {t('action.actions', 'Actions')}
             </th>
           </tr>
 
           {/* Header Row 2: Inline Quick-Filters */}
           <tr style={{ backgroundColor: 'var(--bg-canvas)', borderBottom: '2px solid var(--border-color)' }}>
-            <th style={{ padding: '4px', borderRight: '1px solid var(--border-color)' }}></th>
+            <th style={{ padding: '4px 6px', borderRight: '1px solid var(--border-color)' }} />
             {renderInlineInput('region')}
             {renderInlineInput('workProvince')}
             {renderInlineInput('newWorkProvince')}
@@ -191,7 +194,7 @@ export const UserTable: React.FC<UserTableProps> = ({
             {renderInlineInput('employmentStatus')}
             {renderInlineInput('joinDate')}
             {renderInlineInput('resignDate')}
-            <th></th>
+            <th style={{ padding: '4px 6px' }} />
           </tr>
         </thead>
 
@@ -207,7 +210,7 @@ export const UserTable: React.FC<UserTableProps> = ({
                   fontSize: '13px',
                 }}
               >
-                No user records found matching the filter criteria.
+                {t('table.no_results', 'No user records found matching the filter criteria.')}
               </td>
             </tr>
           ) : (
@@ -267,7 +270,7 @@ export const UserTable: React.FC<UserTableProps> = ({
                     style={{
                       padding: '8px',
                       fontWeight: 500,
-                      color: 'var(--text-primary)',
+                      textAlign: 'left',
                       borderRight: '1px solid var(--border-color)',
                     }}
                   >
@@ -281,7 +284,17 @@ export const UserTable: React.FC<UserTableProps> = ({
 
                   {/* 9. Position */}
                   <td style={{ padding: '8px', borderRight: '1px solid var(--border-color)' }}>
-                    {user.currentPosition}
+                    <span
+                      style={{
+                        padding: '2px 8px',
+                        borderRadius: 'var(--radius-sm)',
+                        backgroundColor: 'var(--bg-canvas)',
+                        fontSize: '12px',
+                        fontWeight: 500,
+                      }}
+                    >
+                      {user.currentPosition}
+                    </span>
                   </td>
 
                   {/* 10. Username */}
@@ -296,16 +309,16 @@ export const UserTable: React.FC<UserTableProps> = ({
                         padding: '2px 8px',
                         borderRadius: 'var(--radius-sm)',
                         fontSize: '12px',
-                        fontWeight: 500,
+                        fontWeight: 600,
                         backgroundColor:
                           user.employmentStatus === 'Official'
-                            ? 'var(--color-primary-soft-bg)'
+                            ? '#E8F5E9'
                             : user.employmentStatus === 'Probation'
-                            ? '#FFF9C4'
-                            : 'var(--bg-canvas)',
+                            ? '#FFF8E1'
+                            : '#F5F5F5',
                         color:
                           user.employmentStatus === 'Official'
-                            ? 'var(--color-primary)'
+                            ? 'var(--color-success-accent)'
                             : user.employmentStatus === 'Probation'
                             ? '#F57F17'
                             : 'var(--text-secondary)',
@@ -332,7 +345,7 @@ export const UserTable: React.FC<UserTableProps> = ({
                       <button
                         type="button"
                         onClick={() => onEditUser(user)}
-                        title="Edit User"
+                        title={t('action.edit', 'Edit User')}
                         style={{
                           width: '28px',
                           height: '28px',
@@ -353,12 +366,12 @@ export const UserTable: React.FC<UserTableProps> = ({
                       <button
                         type="button"
                         onClick={() => onDeleteUser(user)}
-                        title="Delete User"
+                        title={t('action.delete', 'Delete User')}
                         style={{
                           width: '28px',
                           height: '28px',
                           borderRadius: 'var(--radius-sm)',
-                          backgroundColor: 'var(--color-primary)',
+                          backgroundColor: '#D32F2F',
                           color: '#FFFFFF',
                           border: 'none',
                           cursor: 'pointer',
@@ -374,7 +387,7 @@ export const UserTable: React.FC<UserTableProps> = ({
                       <button
                         type="button"
                         onClick={() => onResetPassword(user)}
-                        title="Reset Password to default (123456)"
+                        title={t('action.reset', 'Reset Password to default (123456)')}
                         style={{
                           width: '28px',
                           height: '28px',
@@ -401,3 +414,4 @@ export const UserTable: React.FC<UserTableProps> = ({
     </div>
   );
 };
+export default UserTable;

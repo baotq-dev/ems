@@ -13,6 +13,7 @@ import { MOCK_EXAM_RESULTS, MOCK_EXAMS } from '@/mocks/examMockData';
 import { MOCK_USERS } from '@/mocks/users';
 import { EmployeeExamResultSummary, TargetExamRole } from '@/types/exam';
 import { exportExamResultsCsv } from '@/utils/excel';
+import { useI18n } from '@/context/I18nContext';
 
 const ALL_ROLES: TargetExamRole[] = [
   'Customer',
@@ -27,6 +28,7 @@ const ALL_ROLES: TargetExamRole[] = [
 ];
 
 export const ExamResultPage: React.FC = () => {
+  const { t } = useI18n();
   const [results] = useState<EmployeeExamResultSummary[]>(MOCK_EXAM_RESULTS);
 
   // Search Filters
@@ -176,7 +178,7 @@ export const ExamResultPage: React.FC = () => {
           }}
         >
           {isSearchCollapsed ? <ChevronRight size={18} /> : <ChevronDown size={18} />}
-          <span>Search</span>
+          <span>{t('action.search', 'Search')}</span>
         </div>
 
         {!isSearchCollapsed && (
@@ -185,7 +187,7 @@ export const ExamResultPage: React.FC = () => {
               {/* Date Range */}
               <div>
                 <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '4px' }}>
-                  Date Range
+                  {t('field.date_range', 'Date Range')}
                 </label>
                 <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
                   <input
@@ -207,14 +209,14 @@ export const ExamResultPage: React.FC = () => {
               {/* Exam */}
               <div>
                 <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '4px' }}>
-                  Exam
+                  {t('exam.exam_name', 'Exam')}
                 </label>
                 <select
                   value={filterExamId}
                   onChange={(e) => setFilterExamId(e.target.value)}
                   style={{ width: '100%', height: '32px', padding: '0 8px', fontSize: '13px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}
                 >
-                  <option value="">Select exam</option>
+                  <option value="">{t('exam.select_exam', 'Select exam')}</option>
                   {MOCK_EXAMS.map((ex) => (
                     <option key={ex.id} value={ex.id}>
                       {ex.examName}
@@ -226,14 +228,14 @@ export const ExamResultPage: React.FC = () => {
               {/* Supervisor */}
               <div>
                 <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '4px' }}>
-                  Supervisor
+                  {t('field.supervisor', 'Supervisor')}
                 </label>
                 <select
                   value={filterSupervisorId}
                   onChange={(e) => setFilterSupervisorId(e.target.value)}
                   style={{ width: '100%', height: '32px', padding: '0 8px', fontSize: '13px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}
                 >
-                  <option value="">Select supervisor</option>
+                  <option value="">{t('field.select_supervisor', 'Select supervisor')}</option>
                   {supervisors.map((s) => (
                     <option key={s.id} value={s.id}>
                       {s.fullName}
@@ -245,14 +247,14 @@ export const ExamResultPage: React.FC = () => {
               {/* Position */}
               <div>
                 <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, marginBottom: '4px' }}>
-                  Position
+                  {t('field.position', 'Position')}
                 </label>
                 <select
                   value={filterPosition}
                   onChange={(e) => setFilterPosition(e.target.value)}
                   style={{ width: '100%', height: '32px', padding: '0 8px', fontSize: '13px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}
                 >
-                  <option value="">Select position</option>
+                  <option value="">{t('field.select_position', 'Select position')}</option>
                   {ALL_ROLES.map((role) => (
                     <option key={role} value={role}>
                       {role}
@@ -293,7 +295,7 @@ export const ExamResultPage: React.FC = () => {
                     gap: '6px',
                   }}
                 >
-                  <Search size={15} /> Search
+                  <Search size={15} /> {t('action.search', 'Search')}
                 </button>
                 <button
                   type="button"
@@ -313,7 +315,7 @@ export const ExamResultPage: React.FC = () => {
                     gap: '6px',
                   }}
                 >
-                  <Download size={15} /> Export File
+                  <Download size={15} /> {t('action.export_file', 'Export File')}
                 </button>
               </div>
 
@@ -364,7 +366,7 @@ export const ExamResultPage: React.FC = () => {
           }}
         >
           <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--color-primary)' }}>
-            Showing {startIndex} to {endIndex} of {totalEntries} entries
+            {t('table.showing', 'Showing')} {startIndex} {t('table.to', 'to')} {endIndex} {t('table.of', 'of')} {totalEntries} {t('table.entries', 'entries')}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -385,7 +387,7 @@ export const ExamResultPage: React.FC = () => {
                 <ChevronLeft size={14} />
               </button>
               <span style={{ fontSize: '13px', padding: '0 8px' }}>
-                Page {currentPage} of {totalPages}
+                Page {currentPage} / {totalPages}
               </span>
               <button
                 type="button"
@@ -425,14 +427,14 @@ export const ExamResultPage: React.FC = () => {
             <thead>
               <tr style={{ backgroundColor: 'var(--bg-surface)', borderBottom: '1px solid var(--border-color)' }}>
                 <th style={{ width: '40px', padding: '8px' }}></th>
-                <th style={{ width: '45px', padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>No.</th>
-                <th style={{ padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>Sup</th>
-                <th style={{ padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>Employee Code</th>
-                <th style={{ padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>Employee Name</th>
-                <th style={{ padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>Position</th>
-                <th style={{ padding: '8px', color: 'var(--color-primary)', fontWeight: 700, textAlign: 'left' }}>Exam Name</th>
-                <th style={{ padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>Date</th>
-                <th style={{ width: '80px', padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>Attempts</th>
+                <th style={{ width: '45px', padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>{t('table.no', 'No.')}</th>
+                <th style={{ padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>{t('field.supervisor', 'Sup')}</th>
+                <th style={{ padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>{t('field.employee_code', 'Employee Code')}</th>
+                <th style={{ padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>{t('field.employee_name', 'Employee Name')}</th>
+                <th style={{ padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>{t('field.position', 'Position')}</th>
+                <th style={{ padding: '8px', color: 'var(--color-primary)', fontWeight: 700, textAlign: 'left' }}>{t('exam.exam_name', 'Exam Name')}</th>
+                <th style={{ padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>{t('field.date', 'Date')}</th>
+                <th style={{ width: '80px', padding: '8px', color: 'var(--color-primary)', fontWeight: 700 }}>{t('exam.attempts', 'Attempts')}</th>
               </tr>
               {/* Inline quick-filters */}
               <tr style={{ backgroundColor: 'var(--bg-canvas)', borderBottom: '2px solid var(--border-color)' }}>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Minus, Plus } from 'lucide-react';
 import { DailyScheduleRecord } from '@/types/shift';
 import { MOCK_SHIFTS } from '@/mocks/shiftMockData';
+import { useI18n } from '@/context/I18nContext';
 
 interface ScheduleStatisticsProps {
   selectedEmployeeId: string | null;
@@ -16,6 +17,7 @@ export const ScheduleStatistics: React.FC<ScheduleStatisticsProps> = ({
   currentMonth,
   schedules,
 }) => {
+  const { t } = useI18n();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   // Month prefix string YYYY-MM
@@ -87,7 +89,7 @@ export const ScheduleStatistics: React.FC<ScheduleStatisticsProps> = ({
           userSelect: 'none',
         }}
       >
-        <span>Working Schedule Statistics</span>
+        <span>{t('schedule.statistics_title', 'Working Schedule Statistics')}</span>
         <button
           type="button"
           style={{
@@ -117,23 +119,23 @@ export const ScheduleStatistics: React.FC<ScheduleStatisticsProps> = ({
             <thead>
               <tr style={{ backgroundColor: 'var(--bg-canvas)', borderBottom: '1px solid var(--border-color)' }}>
                 <th style={{ padding: '8px 16px', fontWeight: 600, color: 'var(--text-primary)', width: '60%' }}>
-                  Metric
+                  {t('schedule.metric', 'Metric')}
                 </th>
                 <th style={{ padding: '8px 16px', fontWeight: 600, color: 'var(--text-primary)' }}>
-                  Quantity
+                  {t('schedule.quantity', 'Quantity')}
                 </th>
               </tr>
             </thead>
             <tbody>
               {/* 1. Standard Working Hours / Month */}
               <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                <td style={{ padding: '8px 16px' }}>Standard Working Hours / Month</td>
+                <td style={{ padding: '8px 16px' }}>{t('schedule.standard_hours', 'Standard Working Hours / Month')}</td>
                 <td style={{ padding: '8px 16px', fontWeight: 600 }}>{standardHours}</td>
               </tr>
 
               {/* 2. Total Registered Working Hours */}
               <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                <td style={{ padding: '8px 16px' }}>Total Registered Working Hours</td>
+                <td style={{ padding: '8px 16px' }}>{t('schedule.total_registered_hours', 'Total Registered Working Hours')}</td>
                 <td style={{ padding: '8px 16px', fontWeight: 600, color: 'var(--color-primary)' }}>
                   {totalHours}
                 </td>
@@ -151,7 +153,7 @@ export const ScheduleStatistics: React.FC<ScheduleStatisticsProps> = ({
 
               {/* 4. Active Scheduled Stores Count */}
               <tr>
-                <td style={{ padding: '8px 16px' }}>Active Scheduled Stores Count</td>
+                <td style={{ padding: '8px 16px' }}>{t('schedule.active_stores_count', 'Active Scheduled Stores Count')}</td>
                 <td style={{ padding: '8px 16px', fontWeight: 600 }}>{activeStoresCount}</td>
               </tr>
             </tbody>

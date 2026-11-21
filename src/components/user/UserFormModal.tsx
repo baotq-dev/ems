@@ -14,6 +14,7 @@ import {
   UserStatusHistory,
 } from '@/types/user';
 import { formatDateToDMY } from '@/utils/date';
+import { useI18n } from '@/context/I18nContext';
 
 interface UserFormModalProps {
   isOpen: boolean;
@@ -30,6 +31,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
   onClose,
   onSave,
 }) => {
+  const { t } = useI18n();
   // Form State
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -357,7 +359,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
           }}
         >
           <h2 style={{ margin: 0, fontSize: '15px', fontWeight: 700 }}>
-            {user ? `Edit User: ${user.fullName} (${user.employeeCode})` : 'Create New User'}
+            {user ? `${t('user.edit_user', 'Edit User')}: ${user.fullName} (${user.employeeCode})` : t('user.create_user', 'Create New User')}
           </h2>
           <button
             type="button"
@@ -396,11 +398,11 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
             {/* Section 1: Personal Information */}
             <div style={{ border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', padding: '16px' }}>
               <h3 style={{ margin: '0 0 14px', fontSize: '14px', fontWeight: 700, color: 'var(--color-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '6px' }}>
-                1. Personal Information
+                1. {t('user.personal_info', 'Personal Information')}
               </h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Last Name *</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('user.last_name', 'Last Name')} *</label>
                   <input
                     type="text"
                     required
@@ -411,7 +413,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>First Name *</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('user.first_name', 'First Name')} *</label>
                   <input
                     type="text"
                     required
@@ -422,7 +424,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Full Name (Auto-Synced)</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('field.full_name', 'Full Name')} (Auto-Synced)</label>
                   <input
                     type="text"
                     disabled
@@ -431,19 +433,19 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Gender</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('field.gender', 'Gender')}</label>
                   <select
                     value={gender}
                     onChange={(e) => setGender(e.target.value as Gender)}
                     style={{ width: '100%', height: '32px', padding: '0 8px', fontSize: '13px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}
                   >
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
+                    <option value="Male">{t('user.gender_male', 'Male')}</option>
+                    <option value="Female">{t('user.gender_female', 'Female')}</option>
+                    <option value="Other">{t('user.gender_other', 'Other')}</option>
                   </select>
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Date of Birth</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('user.dob', 'Date of Birth')}</label>
                   <input
                     type="date"
                     value={dateOfBirth}
@@ -452,20 +454,20 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Marital Status</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('user.marital_status', 'Marital Status')}</label>
                   <select
                     value={maritalStatus}
                     onChange={(e) => setMaritalStatus(e.target.value as MaritalStatus)}
                     style={{ width: '100%', height: '32px', padding: '0 8px', fontSize: '13px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}
                   >
-                    <option value="Single">Single</option>
-                    <option value="Married">Married</option>
-                    <option value="Divorced">Divorced</option>
-                    <option value="Widowed">Widowed</option>
+                    <option value="Single">{t('user.single', 'Single')}</option>
+                    <option value="Married">{t('user.married', 'Married')}</option>
+                    <option value="Divorced">{t('user.divorced', 'Divorced')}</option>
+                    <option value="Widowed">{t('user.widowed', 'Widowed')}</option>
                   </select>
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Phone Number *</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('field.phone', 'Phone Number')} *</label>
                   <input
                     type="text"
                     required
@@ -476,7 +478,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Email</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('field.email', 'Email')}</label>
                   <input
                     type="email"
                     value={email}
@@ -486,19 +488,19 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Region</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('field.region', 'Region')}</label>
                   <select
                     value={region}
                     onChange={(e) => setRegion(e.target.value as Region)}
                     style={{ width: '100%', height: '32px', padding: '0 8px', fontSize: '13px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}
                   >
-                    <option value="North">North</option>
-                    <option value="Central">Central</option>
-                    <option value="South">South</option>
+                    <option value="North">{t('field.region_north', 'North')}</option>
+                    <option value="Central">{t('field.region_central', 'Central')}</option>
+                    <option value="South">{t('field.region_south', 'South')}</option>
                   </select>
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Province/City</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('field.province', 'Province/City')}</label>
                   <input
                     type="text"
                     value={workProvince}
@@ -508,7 +510,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Province/City (New)</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('field.province_new', 'Province/City (New)')}</label>
                   <input
                     type="text"
                     value={newWorkProvince}
@@ -520,7 +522,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginTop: '12px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Permanent Address</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('user.permanent_address', 'Permanent Address')}</label>
                   <input
                     type="text"
                     value={permanentAddress}
@@ -530,7 +532,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Temporary Address</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('user.temporary_address', 'Temporary Address')}</label>
                   <input
                     type="text"
                     value={temporaryAddress}
@@ -545,11 +547,11 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
             {/* Section 2: Work & Assignment Information */}
             <div style={{ border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', padding: '16px' }}>
               <h3 style={{ margin: '0 0 14px', fontSize: '14px', fontWeight: 700, color: 'var(--color-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '6px' }}>
-                2. Work & Assignment Information
+                2. {t('user.work_info', 'Work & Assignment Information')}
               </h3>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '16px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Employee Code *</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('field.employee_code', 'Employee Code')} *</label>
                   <input
                     type="text"
                     required
@@ -560,7 +562,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Join Date *</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('field.join_date', 'Join Date')} *</label>
                   <input
                     type="date"
                     required
@@ -573,7 +575,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
 
               {/* Position Assignment Sub-table */}
               <div style={{ marginBottom: '16px' }}>
-                <div style={{ fontSize: '13px', fontWeight: 600, marginBottom: '6px' }}>Position History</div>
+                <div style={{ fontSize: '13px', fontWeight: 600, marginBottom: '6px' }}>{t('user.position_history', 'Position History')}</div>
                 <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', alignItems: 'center' }}>
                   <select
                     value={newPos}
@@ -617,17 +619,17 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                       gap: '4px',
                     }}
                   >
-                    <Plus size={14} /> Add Position
+                    <Plus size={14} /> {t('user.add_position', 'Add Position')}
                   </button>
                 </div>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', border: '1px solid var(--border-color)' }}>
                   <thead style={{ backgroundColor: 'var(--bg-canvas)' }}>
                     <tr>
-                      <th style={{ padding: '6px 8px', textAlign: 'left', width: '40px' }}>No.</th>
-                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>Position</th>
-                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>From Date</th>
-                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>To Date</th>
-                      <th style={{ padding: '6px 8px', textAlign: 'center', width: '60px' }}>Action</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'left', width: '40px' }}>{t('table.no', 'No.')}</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('field.position', 'Position')}</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('field.from_date', 'From Date')}</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('field.to_date', 'To Date')}</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'center', width: '60px' }}>{t('action.actions', 'Action')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -636,7 +638,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                         <td style={{ padding: '6px 8px' }}>{idx + 1}</td>
                         <td style={{ padding: '6px 8px', fontWeight: 600 }}>{ph.position}</td>
                         <td style={{ padding: '6px 8px' }}>{formatDateToDMY(ph.fromDate)}</td>
-                        <td style={{ padding: '6px 8px' }}>{ph.toDate ? formatDateToDMY(ph.toDate) : 'Ongoing'}</td>
+                        <td style={{ padding: '6px 8px' }}>{ph.toDate ? formatDateToDMY(ph.toDate) : t('user.ongoing', 'Ongoing')}</td>
                         <td style={{ padding: '6px 8px', textAlign: 'center' }}>
                           <button
                             type="button"
@@ -654,14 +656,14 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
 
               {/* Supervisor Assignment Sub-table */}
               <div>
-                <div style={{ fontSize: '13px', fontWeight: 600, marginBottom: '6px' }}>Supervisor Assignment History</div>
+                <div style={{ fontSize: '13px', fontWeight: 600, marginBottom: '6px' }}>{t('user.supervisor_history', 'Supervisor Assignment History')}</div>
                 <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', alignItems: 'center' }}>
                   <select
                     value={newSupId}
                     onChange={(e) => setNewSupId(e.target.value)}
                     style={{ height: '30px', fontSize: '12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}
                   >
-                    <option value="">Select Supervisor</option>
+                    <option value="">{t('field.select_supervisor', 'Select Supervisor')}</option>
                     {supervisors.map((s) => (
                       <option key={s.id} value={s.id}>
                         {s.fullName} ({s.employeeCode})
@@ -700,17 +702,17 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                       gap: '4px',
                     }}
                   >
-                    <Plus size={14} /> Assign Supervisor
+                    <Plus size={14} /> {t('user.assign_supervisor', 'Assign Supervisor')}
                   </button>
                 </div>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', border: '1px solid var(--border-color)' }}>
                   <thead style={{ backgroundColor: 'var(--bg-canvas)' }}>
                     <tr>
-                      <th style={{ padding: '6px 8px', textAlign: 'left', width: '40px' }}>No.</th>
-                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>Supervisor</th>
-                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>From Date</th>
-                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>To Date</th>
-                      <th style={{ padding: '6px 8px', textAlign: 'center', width: '60px' }}>Action</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'left', width: '40px' }}>{t('table.no', 'No.')}</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('field.supervisor', 'Supervisor')}</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('field.from_date', 'From Date')}</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('field.to_date', 'To Date')}</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'center', width: '60px' }}>{t('action.actions', 'Action')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -719,7 +721,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                         <td style={{ padding: '6px 8px' }}>{idx + 1}</td>
                         <td style={{ padding: '6px 8px', fontWeight: 600 }}>{sh.supervisorName}</td>
                         <td style={{ padding: '6px 8px' }}>{formatDateToDMY(sh.fromDate)}</td>
-                        <td style={{ padding: '6px 8px' }}>{sh.toDate ? formatDateToDMY(sh.toDate) : 'Ongoing'}</td>
+                        <td style={{ padding: '6px 8px' }}>{sh.toDate ? formatDateToDMY(sh.toDate) : t('user.ongoing', 'Ongoing')}</td>
                         <td style={{ padding: '6px 8px', textAlign: 'center' }}>
                           <button
                             type="button"
@@ -739,11 +741,11 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
             {/* Section 3: Identity Document Information */}
             <div style={{ border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', padding: '16px' }}>
               <h3 style={{ margin: '0 0 14px', fontSize: '14px', fontWeight: 700, color: 'var(--color-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '6px' }}>
-                3. Identity Document Information
+                3. {t('user.id_info', 'Identity Document Information')}
               </h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px', marginBottom: '16px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Doc Type</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('user.doc_type', 'Doc Type')}</label>
                   <select
                     value={identityDocType}
                     onChange={(e) => setIdentityDocType(e.target.value as IdentityDocType)}
@@ -754,7 +756,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                   </select>
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>ID Number *</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('field.identity_number', 'ID Number')} *</label>
                   <input
                     type="text"
                     required
@@ -765,7 +767,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Issue Date</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('user.issue_date', 'Issue Date')}</label>
                   <input
                     type="date"
                     value={identityIssueDate}
@@ -774,7 +776,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Issue Place</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('user.issue_place', 'Issue Place')}</label>
                   <input
                     type="text"
                     value={identityIssuePlace}
@@ -788,14 +790,14 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
               {/* ID Photo Preview Boxes */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div style={{ border: '1px dashed var(--border-color)', borderRadius: 'var(--radius-sm)', padding: '12px', textAlign: 'center', backgroundColor: 'var(--bg-canvas)' }}>
-                  <div style={{ fontSize: '12px', fontWeight: 600, marginBottom: '6px' }}>Front ID Photo</div>
+                  <div style={{ fontSize: '12px', fontWeight: 600, marginBottom: '6px' }}>{t('user.front_id_photo', 'Front ID Photo')}</div>
                   <Camera size={24} style={{ color: 'var(--text-secondary)', margin: '0 auto 6px' }} />
-                  <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>Click to upload front photo preview</div>
+                  <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>{t('user.upload_front_preview', 'Click to upload front photo preview')}</div>
                 </div>
                 <div style={{ border: '1px dashed var(--border-color)', borderRadius: 'var(--radius-sm)', padding: '12px', textAlign: 'center', backgroundColor: 'var(--bg-canvas)' }}>
-                  <div style={{ fontSize: '12px', fontWeight: 600, marginBottom: '6px' }}>Back ID Photo</div>
+                  <div style={{ fontSize: '12px', fontWeight: 600, marginBottom: '6px' }}>{t('user.back_id_photo', 'Back ID Photo')}</div>
                   <Camera size={24} style={{ color: 'var(--text-secondary)', margin: '0 auto 6px' }} />
-                  <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>Click to upload back photo preview</div>
+                  <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>{t('user.upload_back_preview', 'Click to upload back photo preview')}</div>
                 </div>
               </div>
             </div>
@@ -803,11 +805,11 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
             {/* Section 4: Account Information */}
             <div style={{ border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', padding: '16px' }}>
               <h3 style={{ margin: '0 0 14px', fontSize: '14px', fontWeight: 700, color: 'var(--color-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '6px' }}>
-                4. Account Information
+                4. {t('user.account_info', 'Account Information')}
               </h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Username *</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('login.username', 'Username')} *</label>
                   <input
                     type="text"
                     required
@@ -818,7 +820,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Password *</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('login.password', 'Password')} *</label>
                   <input
                     type="password"
                     required
@@ -829,7 +831,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Confirm Password *</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('user.confirm_password', 'Confirm Password')} *</label>
                   <input
                     type="password"
                     required
@@ -840,14 +842,14 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>Account Status</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '4px' }}>{t('field.account_status', 'Account Status')}</label>
                   <select
                     value={accountStatus}
                     onChange={(e) => setAccountStatus(e.target.value as AccountStatus)}
                     style={{ width: '100%', height: '32px', padding: '0 8px', fontSize: '13px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}
                   >
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
+                    <option value="Active">{t('user.status_active', 'Active')}</option>
+                    <option value="Inactive">{t('user.status_inactive', 'Inactive')}</option>
                   </select>
                 </div>
               </div>
@@ -856,7 +858,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
             {/* Section 5: Employment Status & History */}
             <div style={{ border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', padding: '16px' }}>
               <h3 style={{ margin: '0 0 14px', fontSize: '14px', fontWeight: 700, color: 'var(--color-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '6px' }}>
-                5. Employment Status & History
+                5. {t('user.employment_history', 'Employment Status & History')}
               </h3>
               <div style={{ display: 'flex', gap: '8px', marginBottom: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
                 <select
@@ -864,9 +866,9 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                   onChange={(e) => setNewStatus(e.target.value as EmploymentStatus)}
                   style={{ height: '30px', fontSize: '12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}
                 >
-                  <option value="Official">Official</option>
-                  <option value="Probation">Probation</option>
-                  <option value="Resigned">Resigned</option>
+                  <option value="Official">{t('user.status_official', 'Official')}</option>
+                  <option value="Probation">{t('user.status_probation', 'Probation')}</option>
+                  <option value="Resigned">{t('user.status_resigned', 'Resigned')}</option>
                 </select>
                 <input
                   type="date"
@@ -884,14 +886,14 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                 />
                 <input
                   type="text"
-                  placeholder="Reason (if Resigned)"
+                  placeholder={t('user.status_reason_placeholder', 'Reason (if Resigned)')}
                   value={newStatusReason}
                   onChange={(e) => setNewStatusReason(e.target.value)}
                   style={{ height: '30px', fontSize: '12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', padding: '0 8px' }}
                 />
                 <input
                   type="text"
-                  placeholder="Note"
+                  placeholder={t('field.note', 'Note')}
                   value={newStatusNote}
                   onChange={(e) => setNewStatusNote(e.target.value)}
                   style={{ height: '30px', fontSize: '12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', padding: '0 8px' }}
@@ -914,20 +916,20 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                     gap: '4px',
                   }}
                 >
-                  <Plus size={14} /> Add Status Entry
+                  <Plus size={14} /> {t('user.add_status_entry', 'Add Status Entry')}
                 </button>
               </div>
 
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', border: '1px solid var(--border-color)' }}>
                 <thead style={{ backgroundColor: 'var(--bg-canvas)' }}>
                   <tr>
-                    <th style={{ padding: '6px 8px', textAlign: 'left', width: '40px' }}>No.</th>
-                    <th style={{ padding: '6px 8px', textAlign: 'left' }}>Status</th>
-                    <th style={{ padding: '6px 8px', textAlign: 'left' }}>From Date</th>
-                    <th style={{ padding: '6px 8px', textAlign: 'left' }}>To Date</th>
-                    <th style={{ padding: '6px 8px', textAlign: 'left' }}>Reason</th>
-                    <th style={{ padding: '6px 8px', textAlign: 'left' }}>Note</th>
-                    <th style={{ padding: '6px 8px', textAlign: 'center', width: '60px' }}>Action</th>
+                    <th style={{ padding: '6px 8px', textAlign: 'left', width: '40px' }}>{t('table.no', 'No.')}</th>
+                    <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('field.status', 'Status')}</th>
+                    <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('field.from_date', 'From Date')}</th>
+                    <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('field.to_date', 'To Date')}</th>
+                    <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('user.reason', 'Reason')}</th>
+                    <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('field.note', 'Note')}</th>
+                    <th style={{ padding: '6px 8px', textAlign: 'center', width: '60px' }}>{t('action.actions', 'Action')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -936,7 +938,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                       <td style={{ padding: '6px 8px' }}>{idx + 1}</td>
                       <td style={{ padding: '6px 8px', fontWeight: 600 }}>{sh.status}</td>
                       <td style={{ padding: '6px 8px' }}>{formatDateToDMY(sh.fromDate)}</td>
-                      <td style={{ padding: '6px 8px' }}>{sh.toDate ? formatDateToDMY(sh.toDate) : 'Ongoing'}</td>
+                      <td style={{ padding: '6px 8px' }}>{sh.toDate ? formatDateToDMY(sh.toDate) : t('user.ongoing', 'Ongoing')}</td>
                       <td style={{ padding: '6px 8px' }}>{sh.reason || '-'}</td>
                       <td style={{ padding: '6px 8px' }}>{sh.note || '-'}</td>
                       <td style={{ padding: '6px 8px', textAlign: 'center' }}>
@@ -979,7 +981,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                 cursor: 'pointer',
               }}
             >
-              Cancel
+              {t('action.cancel', 'Cancel')}
             </button>
             <button
               type="submit"
@@ -994,7 +996,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
                 cursor: 'pointer',
               }}
             >
-              Save User
+              {t('action.save', 'Save User')}
             </button>
           </div>
         </form>

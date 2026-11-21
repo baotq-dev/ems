@@ -10,6 +10,7 @@ import {
   X,
 } from 'lucide-react';
 import { User, UserFilterParams, EmploymentStatus } from '@/types/user';
+import { useI18n } from '@/context/I18nContext';
 
 interface UserFilterCardProps {
   filterParams: UserFilterParams;
@@ -36,6 +37,7 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
   onOpenAddModal,
   onOpenImportModal,
 }) => {
+  const { t } = useI18n();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const handleFieldChange = (key: keyof UserFilterParams, value: string) => {
@@ -85,7 +87,7 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
         }}
       >
         {isCollapsed ? <ChevronRight size={18} /> : <ChevronDown size={18} />}
-        <span>Search</span>
+        <span>{t('action.search', 'Search')}</span>
       </div>
 
       {/* Filter Body & Action Toolbar */}
@@ -107,7 +109,7 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
                   marginBottom: '4px',
                 }}
               >
-                Position
+                {t('field.position', 'Position')}
               </label>
               <select
                 id="filter-position"
@@ -125,7 +127,7 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
                   outline: 'none',
                 }}
               >
-                <option value="">Select position</option>
+                <option value="">{t('field.select_position', 'Select position')}</option>
                 <option value="PG-Inline">PG-Inline</option>
                 <option value="Customer">Customer</option>
                 <option value="Supervisor">Supervisor</option>
@@ -145,7 +147,7 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
                   marginBottom: '4px',
                 }}
               >
-                Supervisor
+                {t('field.supervisor', 'Supervisor')}
               </label>
               <select
                 id="filter-supervisor"
@@ -163,7 +165,7 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
                   outline: 'none',
                 }}
               >
-                <option value="">Select supervisor</option>
+                <option value="">{t('field.select_supervisor', 'Select supervisor')}</option>
                 {supervisors.map((s) => (
                   <option key={s.id} value={s.id}>
                     {s.fullName} ({s.currentPosition})
@@ -184,7 +186,7 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
                   marginBottom: '4px',
                 }}
               >
-                Employee Code
+                {t('field.employee_code', 'Employee Code')}
               </label>
               <input
                 id="filter-emp-code"
@@ -219,7 +221,7 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
                   marginBottom: '4px',
                 }}
               >
-                Full Name
+                {t('field.full_name', 'Full Name')}
               </label>
               <input
                 id="filter-fullname"
@@ -254,7 +256,7 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
                   marginBottom: '4px',
                 }}
               >
-                Username
+                {t('login.username', 'Username')}
               </label>
               <input
                 id="filter-username"
@@ -289,7 +291,7 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
                   marginBottom: '4px',
                 }}
               >
-                Phone Number
+                {t('field.phone', 'Phone Number')}
               </label>
               <input
                 id="filter-phone"
@@ -324,7 +326,7 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
                   marginBottom: '4px',
                 }}
               >
-                ID / CCCD
+                {t('field.identity_number', 'ID / CCCD')}
               </label>
               <input
                 id="filter-id"
@@ -359,7 +361,7 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
                   marginBottom: '4px',
                 }}
               >
-                Status
+                {t('field.status', 'Status')}
               </label>
               <select
                 id="filter-status"
@@ -377,7 +379,7 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
                   outline: 'none',
                 }}
               >
-                <option value="">Select status</option>
+                <option value="">{t('field.select_status', 'Select status')}</option>
                 <option value="Official">Official</option>
                 <option value="Probation">Probation</option>
                 <option value="Resigned">Resigned</option>
@@ -420,7 +422,7 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
                 onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'var(--color-primary)')}
               >
                 <Search size={15} />
-                <span>Search</span>
+                <span>{t('action.search', 'Search')}</span>
               </button>
 
               <button
@@ -442,7 +444,7 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
                 }}
               >
                 <Download size={15} />
-                <span>Export File</span>
+                <span>{t('action.export_file', 'Export File')}</span>
               </button>
 
               <button
@@ -464,7 +466,7 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
                 }}
               >
                 <Download size={15} />
-                <span>Template File</span>
+                <span>{t('action.template_file', 'Template File')}</span>
               </button>
 
               <button
@@ -511,7 +513,7 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
                 }}
               >
                 <UserPlus size={15} />
-                <span>Add</span>
+                <span>{t('action.add', 'Add')}</span>
               </button>
 
               <button
@@ -533,13 +535,13 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
                 }}
               >
                 <Plus size={15} />
-                <span>Import File</span>
+                <span>{t('action.import_file', 'Import File')}</span>
               </button>
 
               <button
                 type="button"
                 onClick={onClearFilters}
-                title="Clear all filters"
+                title={t('action.clear', 'Clear all filters')}
                 style={{
                   height: '32px',
                   width: '32px',
@@ -562,3 +564,4 @@ export const UserFilterCard: React.FC<UserFilterCardProps> = ({
     </div>
   );
 };
+export default UserFilterCard;

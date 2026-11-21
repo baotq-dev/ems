@@ -1,6 +1,7 @@
 import React from 'react';
 import { Search, Download, Plus, X } from 'lucide-react';
 import { User, UserPosition } from '@/types/user';
+import { useI18n } from '@/context/I18nContext';
 
 interface ScheduleFilterCardProps {
   supervisors: User[];
@@ -35,6 +36,7 @@ export const ScheduleFilterCard: React.FC<ScheduleFilterCardProps> = ({
   onOpenImportModal,
   hasActiveEmployee,
 }) => {
+  const { t } = useI18n();
   // Filter selectable employees in dropdown by supervisor and position
   const availableEmployees = allEmployees.filter((emp) => {
     if (selectedSupervisorId && emp.currentSupervisorId !== selectedSupervisorId) {
@@ -77,7 +79,7 @@ export const ScheduleFilterCard: React.FC<ScheduleFilterCardProps> = ({
                 marginBottom: '4px',
               }}
             >
-              Supervisor
+              {t('field.supervisor', 'Supervisor')}
             </label>
             <select
               id="schedule-filter-supervisor"
@@ -95,7 +97,7 @@ export const ScheduleFilterCard: React.FC<ScheduleFilterCardProps> = ({
                 outline: 'none',
               }}
             >
-              <option value="">Select supervisor</option>
+              <option value="">{t('field.select_supervisor', 'Select supervisor')}</option>
               {supervisors.map((s) => (
                 <option key={s.id} value={s.id}>
                   {s.fullName} ({s.currentPosition})
@@ -116,7 +118,7 @@ export const ScheduleFilterCard: React.FC<ScheduleFilterCardProps> = ({
                 marginBottom: '4px',
               }}
             >
-              Position
+              {t('field.position', 'Position')}
             </label>
             <select
               id="schedule-filter-position"
@@ -134,7 +136,7 @@ export const ScheduleFilterCard: React.FC<ScheduleFilterCardProps> = ({
                 outline: 'none',
               }}
             >
-              <option value="">Select position</option>
+              <option value="">{t('field.select_position', 'Select position')}</option>
               {(['PG-Inline', 'Customer', 'Supervisor', 'Admin'] as UserPosition[]).map((pos) => (
                 <option key={pos} value={pos}>
                   {pos}
@@ -155,7 +157,7 @@ export const ScheduleFilterCard: React.FC<ScheduleFilterCardProps> = ({
                 marginBottom: '4px',
               }}
             >
-              Employee
+              {t('field.employee', 'Employee')}
             </label>
             <select
               id="schedule-filter-employee"
@@ -173,7 +175,7 @@ export const ScheduleFilterCard: React.FC<ScheduleFilterCardProps> = ({
                 outline: 'none',
               }}
             >
-              <option value="">Select employee</option>
+              <option value="">{t('field.select_store', 'Select employee')}</option>
               {availableEmployees.map((emp) => (
                 <option key={emp.id} value={emp.id}>
                   {emp.employeeCode} - {emp.fullName}
@@ -218,7 +220,7 @@ export const ScheduleFilterCard: React.FC<ScheduleFilterCardProps> = ({
               onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'var(--color-primary)')}
             >
               <Search size={15} />
-              <span>Search</span>
+              <span>{t('action.search', 'Search')}</span>
             </button>
 
             <button
@@ -241,7 +243,7 @@ export const ScheduleFilterCard: React.FC<ScheduleFilterCardProps> = ({
               }}
             >
               <Download size={15} />
-              <span>Export Report</span>
+              <span>{t('action.export_report', 'Export Report')}</span>
             </button>
           </div>
 
@@ -266,7 +268,7 @@ export const ScheduleFilterCard: React.FC<ScheduleFilterCardProps> = ({
               }}
             >
               <Download size={15} />
-              <span>Template File</span>
+              <span>{t('action.template_file', 'Template File')}</span>
             </button>
 
             <button
@@ -288,7 +290,7 @@ export const ScheduleFilterCard: React.FC<ScheduleFilterCardProps> = ({
               }}
             >
               <Plus size={15} />
-              <span>Import File</span>
+              <span>{t('action.import_file', 'Import File')}</span>
             </button>
 
             <button

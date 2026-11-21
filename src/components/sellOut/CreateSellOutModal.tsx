@@ -3,6 +3,7 @@ import { X, RotateCw, Trash2, AlertCircle } from 'lucide-react';
 import { ProductCatalogItem, SellOutReportRecord, SellOutLineItem } from '@/types/sellOut';
 import { MOCK_PRODUCT_CATALOG } from '@/mocks/sellOutMockData';
 import { MOCK_USERS } from '@/mocks/users';
+import { useI18n } from '@/context/I18nContext';
 
 interface StoreOptionItem {
   code: string;
@@ -117,6 +118,8 @@ export const CreateSellOutModal: React.FC<CreateSellOutModalProps> = ({
   onClose,
   onSave,
 }) => {
+  const { t } = useI18n();
+
   const [selectedDate, setSelectedDate] = useState<string>(
     new Date().toISOString().split('T')[0]
   );
@@ -352,7 +355,7 @@ export const CreateSellOutModal: React.FC<CreateSellOutModalProps> = ({
               margin: 0,
             }}
           >
-            Create Sell-Out Report
+            {t('sellout.create_title', 'Create Sell-Out Report')}
           </h2>
           <button
             type="button"
@@ -368,7 +371,7 @@ export const CreateSellOutModal: React.FC<CreateSellOutModalProps> = ({
               justifyContent: 'center',
               borderRadius: '4px',
             }}
-            title="Close"
+            title={t('action.close', 'Close')}
           >
             <X size={20} />
           </button>
@@ -430,7 +433,7 @@ export const CreateSellOutModal: React.FC<CreateSellOutModalProps> = ({
                   marginBottom: '6px',
                 }}
               >
-                Date <span style={{ color: '#ef4444' }}>*</span>
+                {t('field.date', 'Date')} <span style={{ color: '#ef4444' }}>*</span>
               </label>
               <input
                 type="date"
@@ -460,7 +463,7 @@ export const CreateSellOutModal: React.FC<CreateSellOutModalProps> = ({
                   marginBottom: '6px',
                 }}
               >
-                Employee <span style={{ color: '#ef4444' }}>*</span>
+                {t('field.employee', 'Employee')} <span style={{ color: '#ef4444' }}>*</span>
               </label>
               <select
                 value={selectedEmployeeId}
@@ -476,7 +479,7 @@ export const CreateSellOutModal: React.FC<CreateSellOutModalProps> = ({
                   boxSizing: 'border-box',
                 }}
               >
-                <option value="">Select employee</option>
+                <option value="">{t('field.all_employees', 'Select employee')}</option>
                 {eligibleEmployees.map((emp) => (
                   <option key={emp.id} value={emp.id}>
                     {emp.employeeCode} - {emp.fullName} ({emp.currentPosition})
@@ -498,7 +501,7 @@ export const CreateSellOutModal: React.FC<CreateSellOutModalProps> = ({
                       marginBottom: '6px',
                     }}
                   >
-                    Store <span style={{ color: '#ef4444' }}>*</span>
+                    {t('field.store', 'Store')} <span style={{ color: '#ef4444' }}>*</span>
                   </label>
                   <select
                     value={selectedStoreCode}
@@ -514,7 +517,7 @@ export const CreateSellOutModal: React.FC<CreateSellOutModalProps> = ({
                       boxSizing: 'border-box',
                     }}
                   >
-                    <option value="">Select store</option>
+                    <option value="">{t('field.store', 'Select store')}</option>
                     {STORE_OPTIONS.map((st) => (
                       <option key={st.code} value={st.code}>
                         [{st.code}] {st.name} ({st.chain})
@@ -526,7 +529,7 @@ export const CreateSellOutModal: React.FC<CreateSellOutModalProps> = ({
                 <button
                   type="button"
                   onClick={handleResetFiltersAndQuantities}
-                  title="Reset quantities & filters"
+                  title={t('action.reset', 'Reset quantities & filters')}
                   style={{
                     padding: '8px 10px',
                     backgroundColor: 'var(--bg-surface)',
@@ -578,7 +581,7 @@ export const CreateSellOutModal: React.FC<CreateSellOutModalProps> = ({
                       <button
                         type="button"
                         onClick={handleBulkClear}
-                        title="Bulk clear selected rows"
+                        title={t('action.bulk_clear', 'Bulk clear selected rows')}
                         style={{
                           background: 'rgba(255, 255, 255, 0.2)',
                           border: 'none',
@@ -594,19 +597,19 @@ export const CreateSellOutModal: React.FC<CreateSellOutModalProps> = ({
                         <Trash2 size={13} />
                       </button>
                     </th>
-                    <th style={{ padding: '8px 10px', width: '40px', textAlign: 'center' }}>No.</th>
-                    <th style={{ padding: '8px 10px', minWidth: '110px' }}>Category</th>
-                    <th style={{ padding: '8px 10px', minWidth: '150px' }}>Product Group</th>
-                    <th style={{ padding: '8px 10px', minWidth: '100px' }}>Product Code</th>
-                    <th style={{ padding: '8px 10px', minWidth: '220px' }}>Product Name</th>
+                    <th style={{ padding: '8px 10px', width: '40px', textAlign: 'center' }}>{t('table.no', 'No.')}</th>
+                    <th style={{ padding: '8px 10px', minWidth: '110px' }}>{t('field.category', 'Category')}</th>
+                    <th style={{ padding: '8px 10px', minWidth: '150px' }}>{t('field.product_group', 'Product Group')}</th>
+                    <th style={{ padding: '8px 10px', minWidth: '100px' }}>{t('field.product_code', 'Product Code')}</th>
+                    <th style={{ padding: '8px 10px', minWidth: '220px' }}>{t('field.product_name', 'Product Name')}</th>
                     <th style={{ padding: '8px 10px', width: '100px', textAlign: 'center' }}>
-                      Total Quantity
+                      {t('field.total_quantity', 'Total Quantity')}
                     </th>
                     <th style={{ padding: '8px 10px', width: '100px', textAlign: 'center' }}>
-                      Quantity
+                      {t('field.quantity', 'Quantity')}
                     </th>
-                    <th style={{ padding: '8px 10px', minWidth: '140px' }}>Note</th>
-                    <th style={{ padding: '8px 10px', width: '60px', textAlign: 'center' }}>OSA</th>
+                    <th style={{ padding: '8px 10px', minWidth: '140px' }}>{t('field.note', 'Note')}</th>
+                    <th style={{ padding: '8px 10px', width: '60px', textAlign: 'center' }}>{t('field.osa', 'OSA')}</th>
                   </tr>
 
                   {/* Inline Filter Row */}
@@ -618,7 +621,7 @@ export const CreateSellOutModal: React.FC<CreateSellOutModalProps> = ({
                         onChange={(e) => handleSelectAllDisplayed(e.target.checked)}
                         disabled={displayedRows.length === 0}
                         style={{ cursor: 'pointer' }}
-                        title="Select all displayed"
+                        title={t('table.select_all', 'Select all displayed')}
                       />
                     </th>
                     <th style={{ padding: '4px 8px' }}></th>
@@ -703,8 +706,8 @@ export const CreateSellOutModal: React.FC<CreateSellOutModalProps> = ({
                         }}
                       >
                         {!selectedEmployeeId
-                          ? 'Please select an employee and store to load product catalog.'
-                          : 'Please select a store to load product catalog.'}
+                          ? t('sellout.select_emp_first', 'Please select an employee and store to load product catalog.')
+                          : t('sellout.select_store_first', 'Please select a store to load product catalog.')}
                       </td>
                     </tr>
                   ) : displayedRows.length === 0 ? (
@@ -718,7 +721,7 @@ export const CreateSellOutModal: React.FC<CreateSellOutModalProps> = ({
                           fontSize: '13px',
                         }}
                       >
-                        No results found
+                        {t('table.no_results', 'No results found')}
                       </td>
                     </tr>
                   ) : (
@@ -839,7 +842,7 @@ export const CreateSellOutModal: React.FC<CreateSellOutModalProps> = ({
               cursor: 'pointer',
             }}
           >
-            Close
+            {t('action.close', 'Close')}
           </button>
           <button
             type="button"
@@ -855,7 +858,7 @@ export const CreateSellOutModal: React.FC<CreateSellOutModalProps> = ({
               cursor: 'pointer',
             }}
           >
-            Save
+            {t('action.save', 'Save')}
           </button>
         </div>
       </div>

@@ -11,6 +11,7 @@ import {
 import { MOCK_TIMESHEET_ROWS } from '@/mocks/attendantMockData';
 import { MOCK_USERS } from '@/mocks/users';
 import { EmployeeTimesheetRow, TimesheetCellHighlight } from '@/types/attendant';
+import { useI18n } from '@/context/I18nContext';
 
 const HIGHLIGHT_STYLES: Record<TimesheetCellHighlight, { bg: string; color: string }> = {
   none: { bg: 'transparent', color: 'inherit' },
@@ -24,6 +25,7 @@ const HIGHLIGHT_STYLES: Record<TimesheetCellHighlight, { bg: string; color: stri
 const WEEKDAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export const TimesheetPage: React.FC = () => {
+  const { t } = useI18n();
   const [rows] = useState<EmployeeTimesheetRow[]>(MOCK_TIMESHEET_ROWS);
 
   // Search Collapsible State
@@ -171,7 +173,7 @@ export const TimesheetPage: React.FC = () => {
           }}
         >
           {isSearchCollapsed ? <ChevronRight size={18} /> : <ChevronDown size={18} />}
-          <span>Search</span>
+          <span>{t('action.search', 'Search')}</span>
         </div>
 
         {!isSearchCollapsed && (
@@ -180,7 +182,7 @@ export const TimesheetPage: React.FC = () => {
               {/* Target Month */}
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>
-                  Target Month
+                  {t('field.month', 'Target Month')}
                 </label>
                 <input
                   type="month"
@@ -193,14 +195,14 @@ export const TimesheetPage: React.FC = () => {
               {/* Supervisor */}
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>
-                  Supervisor
+                  {t('field.supervisor', 'Supervisor')}
                 </label>
                 <select
                   value={filterSupervisorId}
                   onChange={(e) => setFilterSupervisorId(e.target.value)}
                   style={{ width: '100%', height: '30px', padding: '0 6px', fontSize: '12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}
                 >
-                  <option value="">Select supervisor</option>
+                  <option value="">{t('field.select_supervisor', 'Select supervisor')}</option>
                   {supervisors.map((s) => (
                     <option key={s.id} value={s.id}>{s.fullName}</option>
                   ))}
@@ -210,14 +212,14 @@ export const TimesheetPage: React.FC = () => {
               {/* Position */}
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>
-                  Position
+                  {t('field.position', 'Position')}
                 </label>
                 <select
                   value={filterPosition}
                   onChange={(e) => setFilterPosition(e.target.value)}
                   style={{ width: '100%', height: '30px', padding: '0 6px', fontSize: '12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}
                 >
-                  <option value="">Select position</option>
+                  <option value="">{t('field.select_position', 'Select position')}</option>
                   <option value="PG-Inline">PG-Inline</option>
                   <option value="Supervisor">Supervisor</option>
                   <option value="MER">MER</option>
@@ -227,14 +229,14 @@ export const TimesheetPage: React.FC = () => {
               {/* Employee */}
               <div>
                 <label style={{ display: 'block', fontSize: '12px', fontWeight: 500, marginBottom: '4px' }}>
-                  Employee
+                  {t('field.employee', 'Employee')}
                 </label>
                 <select
                   value={filterEmployeeId}
                   onChange={(e) => setFilterEmployeeId(e.target.value)}
                   style={{ width: '100%', height: '30px', padding: '0 6px', fontSize: '12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)' }}
                 >
-                  <option value="">Select employee</option>
+                  <option value="">{t('field.select_store', 'Select employee')}</option>
                   {MOCK_USERS.map((emp) => (
                     <option key={emp.employeeCode} value={emp.employeeCode}>
                       {emp.employeeCode} - {emp.fullName}
@@ -264,7 +266,7 @@ export const TimesheetPage: React.FC = () => {
                   gap: '6px',
                 }}
               >
-                <Search size={15} /> Search
+                <Search size={15} /> {t('action.search', 'Search')}
               </button>
               <button
                 type="button"
@@ -284,7 +286,7 @@ export const TimesheetPage: React.FC = () => {
                   gap: '6px',
                 }}
               >
-                <Download size={15} /> Export Excel
+                <Download size={15} /> {t('action.export_excel', 'Export Excel')}
               </button>
             </div>
           </div>
@@ -317,15 +319,15 @@ export const TimesheetPage: React.FC = () => {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           <div style={{ width: '14px', height: '14px', backgroundColor: 'var(--color-primary)', borderRadius: '2px' }} />
-          <span>Absent</span>
+          <span>{t('schedule.absent', 'Absent')}</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           <div style={{ width: '14px', height: '14px', backgroundColor: '#EAB308', borderRadius: '2px' }} />
-          <span>Not Checked Out</span>
+          <span>{t('schedule.not_checked_out', 'Not Checked Out')}</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           <div style={{ width: '14px', height: '14px', backgroundColor: 'var(--color-success-accent)', borderRadius: '2px' }} />
-          <span>Worked on Day Off</span>
+          <span>{t('schedule.worked_off_day', 'Worked on Day Off')}</span>
         </div>
       </div>
 
@@ -352,7 +354,7 @@ export const TimesheetPage: React.FC = () => {
           }}
         >
           <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--color-primary)' }}>
-            Showing {startIndex} to {endIndex} of {totalEntries} entries
+            {t('table.showing', 'Showing')} {startIndex} {t('table.to', 'to')} {endIndex} {t('table.of', 'of')} {totalEntries} {t('table.entries', 'entries')}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -425,7 +427,7 @@ export const TimesheetPage: React.FC = () => {
                     borderRight: '1px solid #6B7280',
                   }}
                 >
-                  No.
+                  {t('table.no', 'No.')}
                 </th>
                 <th
                   rowSpan={3}
@@ -440,7 +442,7 @@ export const TimesheetPage: React.FC = () => {
                     borderRight: '1px solid #6B7280',
                   }}
                 >
-                  Supervisor
+                  {t('field.supervisor', 'Supervisor')}
                 </th>
                 <th
                   rowSpan={3}
@@ -455,7 +457,7 @@ export const TimesheetPage: React.FC = () => {
                     borderRight: '2px solid var(--color-primary)',
                   }}
                 >
-                  Employee
+                  {t('field.employee', 'Employee')}
                 </th>
                 <th colSpan={daysInMonth} style={{ padding: '6px', fontWeight: 700, fontSize: '13px', letterSpacing: '0.5px' }}>
                   {new Date(appliedFilters.month + '-01').toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}

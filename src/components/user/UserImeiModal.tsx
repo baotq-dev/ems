@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, Smartphone } from 'lucide-react';
 import { User } from '@/types/user';
+import { useI18n } from '@/context/I18nContext';
 
 interface UserImeiModalProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface UserImeiModalProps {
 }
 
 export const UserImeiModal: React.FC<UserImeiModalProps> = ({ isOpen, users, onClose }) => {
+  const { t } = useI18n();
   if (!isOpen) return null;
 
   // Filter active PG-Inline employees for device assignment summary
@@ -53,7 +55,7 @@ export const UserImeiModal: React.FC<UserImeiModalProps> = ({ isOpen, users, onC
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600, fontSize: '14px' }}>
             <Smartphone size={18} />
-            <span>I_imei - Device & IMEI Assignment Summary</span>
+            <span>{t('user.imei_title', 'I_imei - Device & IMEI Assignment Summary')}</span>
           </div>
           <button
             type="button"
@@ -74,7 +76,7 @@ export const UserImeiModal: React.FC<UserImeiModalProps> = ({ isOpen, users, onC
         {/* Body */}
         <div style={{ padding: '16px', overflowY: 'auto', flex: 1 }}>
           <p style={{ margin: '0 0 12px', fontSize: '13px', color: 'var(--text-secondary)' }}>
-            Summary of registered handheld and mobile devices assigned to active field staff (PG-Inline).
+            {t('user.imei_desc', 'Summary of registered handheld and mobile devices assigned to active field staff (PG-Inline).')}
           </p>
 
           <table
@@ -88,12 +90,12 @@ export const UserImeiModal: React.FC<UserImeiModalProps> = ({ isOpen, users, onC
           >
             <thead>
               <tr style={{ backgroundColor: 'var(--bg-canvas)', borderBottom: '1px solid var(--border-color)' }}>
-                <th style={{ padding: '8px 12px' }}>No.</th>
-                <th style={{ padding: '8px 12px' }}>Employee Code</th>
-                <th style={{ padding: '8px 12px' }}>Full Name</th>
-                <th style={{ padding: '8px 12px' }}>Work Province</th>
-                <th style={{ padding: '8px 12px' }}>Assigned IMEI / Device ID</th>
-                <th style={{ padding: '8px 12px' }}>Status</th>
+                <th style={{ padding: '8px 12px' }}>{t('table.no', 'No.')}</th>
+                <th style={{ padding: '8px 12px' }}>{t('field.employee_code', 'Employee Code')}</th>
+                <th style={{ padding: '8px 12px' }}>{t('field.full_name', 'Full Name')}</th>
+                <th style={{ padding: '8px 12px' }}>{t('field.work_province', 'Work Province')}</th>
+                <th style={{ padding: '8px 12px' }}>{t('user.imei_col', 'Assigned IMEI / Device ID')}</th>
+                <th style={{ padding: '8px 12px' }}>{t('field.status', 'Status')}</th>
               </tr>
             </thead>
             <tbody>
@@ -119,7 +121,7 @@ export const UserImeiModal: React.FC<UserImeiModalProps> = ({ isOpen, users, onC
                           fontWeight: 500,
                         }}
                       >
-                        Bound
+                        {t('user.status_bound', 'Bound')}
                       </span>
                     </td>
                   </tr>
@@ -152,7 +154,7 @@ export const UserImeiModal: React.FC<UserImeiModalProps> = ({ isOpen, users, onC
               cursor: 'pointer',
             }}
           >
-            Close
+            {t('action.close', 'Close')}
           </button>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Upload, FileText, CheckCircle2 } from 'lucide-react';
 import { User, Region, UserPosition, EmploymentStatus } from '@/types/user';
+import { useI18n } from '@/context/I18nContext';
 
 interface UserImportModalProps {
   isOpen: boolean;
@@ -13,6 +14,7 @@ export const UserImportModal: React.FC<UserImportModalProps> = ({
   onClose,
   onImportUsers,
 }) => {
+  const { t } = useI18n();
   const [file, setFile] = useState<File | null>(null);
   const [parsedUsers, setParsedUsers] = useState<User[]>([]);
   const [error, setError] = useState<string>('');
@@ -25,7 +27,7 @@ export const UserImportModal: React.FC<UserImportModalProps> = ({
     if (!selectedFile) return;
 
     if (!selectedFile.name.endsWith('.csv')) {
-      setError('Please select a valid .csv file.');
+      setError(t('user.import_csv_error', 'Please select a valid .csv file.'));
       return;
     }
 
@@ -37,7 +39,7 @@ export const UserImportModal: React.FC<UserImportModalProps> = ({
         const text = event.target?.result as string;
         const lines = text.split(/\r?\n/).filter((line) => line.trim().length > 0);
         if (lines.length < 2) {
-          setError('CSV file must contain a header row and at least one data row.');
+          setError(t('user.import_min_rows', 'CSV file must contain a header row and at least one data row.'));
           return;
         }
 
@@ -102,7 +104,7 @@ export const UserImportModal: React.FC<UserImportModalProps> = ({
 
         setParsedUsers(imported);
       } catch {
-        setError('Error reading or parsing CSV file.');
+        setError(t('user.import_read_error', 'Error reading or parsing CSV file.'));
       }
     };
     reader.readAsText(selectedFile);
@@ -154,7 +156,7 @@ export const UserImportModal: React.FC<UserImportModalProps> = ({
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600, fontSize: '14px' }}>
             <Upload size={18} />
-            <span>Import User File (.csv)</span>
+            <span>{t('user.import_title', 'Import User File (.csv)')}</span>
           </div>
           <button
             type="button"
@@ -195,10 +197,10 @@ export const UserImportModal: React.FC<UserImportModalProps> = ({
             <label htmlFor="import-csv-file" style={{ cursor: 'pointer', display: 'block' }}>
               <FileText size={36} style={{ color: 'var(--color-primary)', margin: '0 auto 8px' }} />
               <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>
-                {file ? file.name : 'Click to select or drop .csv file here'}
+                {file ? file.name : t('user.import_drop_placeholder', 'Click to select or drop .csv file here')}
               </div>
               <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px' }}>
-                Conforming to template format (.csv)
+                {t('user.import_conforming', 'Conforming to template format (.csv)')}
               </div>
             </label>
           </div>
@@ -232,7 +234,7 @@ export const UserImportModal: React.FC<UserImportModalProps> = ({
                 }}
               >
                 <CheckCircle2 size={16} />
-                <span>Parsed {parsedUsers.length} records successfully:</span>
+                <span>{t('user.import_success_parsed', 'Parsed records successfully:')} ({parsedUsers.length})</span>
               </div>
               <div
                 style={{
@@ -246,10 +248,10 @@ export const UserImportModal: React.FC<UserImportModalProps> = ({
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                   <thead style={{ backgroundColor: 'var(--bg-canvas)' }}>
                     <tr>
-                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>Code</th>
-                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>Name</th>
-                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>Position</th>
-                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>Phone</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('field.employee_code', 'Code')}</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('field.full_name', 'Name')}</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('field.position', 'Position')}</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'left' }}>{t('field.phone', 'Phone')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -292,7 +294,7 @@ export const UserImportModal: React.FC<UserImportModalProps> = ({
               cursor: 'pointer',
             }}
           >
-            Cancel
+            {t('action.cancel', 'Cancel')}
           </button>
           <button
             type="button"
@@ -309,7 +311,7 @@ export const UserImportModal: React.FC<UserImportModalProps> = ({
               cursor: parsedUsers.length > 0 ? 'pointer' : 'not-allowed',
             }}
           >
-            Confirm Import ({parsedUsers.length})
+            {t('user.confirm_import_btn', 'Confirm Import')} ({parsedUsers.length})
           </button>
         </div>
       </div>

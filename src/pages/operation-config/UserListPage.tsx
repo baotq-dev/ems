@@ -10,6 +10,7 @@ import { UserImeiModal } from '@/components/user/UserImeiModal';
 import { ConfirmModal } from '@/components/user/ConfirmModal';
 import { exportUsersToCsv, downloadTemplateCsv } from '@/utils/csv';
 import { formatDateToDMY } from '@/utils/date';
+import { useI18n } from '@/context/I18nContext';
 
 const INITIAL_INLINE_FILTERS: InlineFilters = {
   region: '',
@@ -27,6 +28,7 @@ const INITIAL_INLINE_FILTERS: InlineFilters = {
 };
 
 export const UserListPage: React.FC = () => {
+  const { t } = useI18n();
   // Master users state
   const [users, setUsers] = useState<User[]>(MOCK_USERS);
 
@@ -392,9 +394,9 @@ export const UserListPage: React.FC = () => {
 
       <ConfirmModal
         isOpen={deleteModalOpen}
-        title="Confirm Delete User"
-        message={`Are you sure you want to delete user ${userToDelete?.fullName} (${userToDelete?.employeeCode})? This action will remove the record from current state.`}
-        confirmLabel="Delete"
+        title={t('user.confirm_delete', 'Confirm Delete User')}
+        message={`${t('user.delete_confirm_msg', 'Are you sure you want to delete user')} ${userToDelete?.fullName} (${userToDelete?.employeeCode})?`}
+        confirmLabel={t('action.delete', 'Delete')}
         confirmColor="primary"
         onConfirm={handleConfirmDelete}
         onCancel={() => {
@@ -405,9 +407,9 @@ export const UserListPage: React.FC = () => {
 
       <ConfirmModal
         isOpen={resetModalOpen}
-        title="Confirm Password Reset"
-        message={`Reset password for user "${userToReset?.username}" (${userToReset?.fullName}) to default (123456)?`}
-        confirmLabel="Reset Password"
+        title={t('user.confirm_reset', 'Confirm Password Reset')}
+        message={`${t('user.reset_confirm_msg', 'Reset password for user')} "${userToReset?.username}" (${userToReset?.fullName}) to default (123456)?`}
+        confirmLabel={t('user.confirm_reset_btn', 'Reset Password')}
         confirmColor="success"
         onConfirm={handleConfirmResetPassword}
         onCancel={() => {
