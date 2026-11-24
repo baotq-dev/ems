@@ -1,5 +1,6 @@
 import * as XLSX from 'xlsx';
 import { ExamItem, ExamQuestion, EmployeeExamResultSummary } from '@/types/exam';
+import { WorkingShiftRecord, ShiftRefCode } from '@/types/workingShift';
 
 export function generateExamTemplateXlsx(): void {
   const wsData: (string | number | boolean)[][] = [
@@ -141,6 +142,221 @@ export function exportExamListCsv(exams: ExamItem[], filename = 'exam_list_expor
   URL.revokeObjectURL(url);
 }
 
+/**
+ * SPEC-12: Generate and download TemplateShiftList.xlsx
+ * Follows exact schema: Sheet "ShiftList", D1="SHIFT LIST", Row 3 Header cols A-M
+ */
+export function generateShiftTemplateXlsx(): void {
+  const wsData: (string | number | boolean | null)[][] = [
+    [null, null, null, 'SHIFT LIST'],
+    [],
+    [
+      'No.',
+      'ShiftGroup*',
+      'GroupName*',
+      'RefCode*',
+      'ShiftCode*',
+      'ShiftName*',
+      'From',
+      'To',
+      'Value',
+      'Note',
+      'Order',
+      'OT',
+      'Status',
+    ],
+    [
+      1,
+      'PA',
+      'PA',
+      'ON',
+      'AM07H00',
+      '07:00 - 15:00',
+      '07:00',
+      '15:00',
+      1,
+      'Morning shift sample',
+      1,
+      0,
+      1,
+    ],
+    [
+      2,
+      'PA',
+      'PA',
+      'ON',
+      'PM1420',
+      '14:01 - 20:00',
+      '14:01',
+      '20:00',
+      0.75,
+      'Afternoon sample',
+      2,
+      0,
+      1,
+    ],
+    [
+      3,
+      'PA_KHO',
+      'PA KHO',
+      'ON',
+      'KHO-OT',
+      '17:00 - 21:00',
+      '17:00',
+      '21:00',
+      0.5,
+      'Overtime warehouse sample',
+      3,
+      1,
+      1,
+    ],
+    [
+      4,
+      'PA',
+      'PA',
+      'OFF',
+      'OFF-DAY',
+      'Day Off (OFF)',
+      '00:00',
+      '00:00',
+      0,
+      'Day off sample',
+      4,
+      0,
+      1,
+    ],
+  ];
+
+  const ws = XLSX.utils.aoa_to_sheet(wsData);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'ShiftList');
+  XLSX.writeFile(wb, 'TemplateShiftList.xlsx');
+}
+
+/**
+ * SPEC-12: Parse imported TemplateShiftList.xlsx file
+ */
+export async function parseShiftImportXlsx(file: File): Promise<WorkingShiftRecord[]> {
+  const data = await file.arrayBuffer();
+  const wb = XLSX.read(data, { type: 'array' });
+  const sheetName = wb.SheetNames.includes('ShiftList') ? 'ShiftList' : wb.SheetNames[0];
+  const ws = wb.Sheets[sheetName];
+
+  const rows: (string | number | boolean | undefined)[][] = XLSX.utils.sheet_to_json(ws, { header: 1 });
+
+  // Rows 0-1 are Title block, Row 2 is Header (index 2), Data starts at index 3
+  if (rows.length < 4) {
+    throw new Error('ShiftList sheet must contain header row and at least one data row.');
+  }
+
+  const dataRows = rows.slice(3);
+  const importedRecords: WorkingShiftRecord[] = [];
+
+  dataRows.forEach((r, idx) => {
+    if (!r || r.length === 0) return;
+    const shiftGroup = String(r[1] || '').trim();
+    const groupName = String(r[2] || '').trim();
+    const rawRefCode = String(r[3] || '').trim().toUpperCase();
+    const refCode: ShiftRefCode = rawRefCode === 'OFF' ? 'OFF' : 'ON';
+    const shiftCode = String(r[4] || '').trim();
+    const shiftName = String(r[5] || '').trim();
+
+    // Required columns validation
+    if (!shiftGroup || !groupName || !shiftCode || !shiftName) {
+      return; // Skip invalid rows missing mandatory fields
+    }
+
+    const fromTime = String(r[6] || '00:00').trim();
+    const toTime = String(r[7] || '00:00').trim();
+    const valueNum = Number(r[8]);
+    const value = !isNaN(valueNum) ? valueNum : 1;
+    const note = r[9] !== undefined ? String(r[9]).trim() : undefined;
+    const sortOrderNum = Number(r[10]);
+    const sortOrder = !isNaN(sortOrderNum) ? sortOrderNum : idx + 1;
+
+    // OT Boolean parsing: 1 / TRUE / Yes -> true
+    const rawOt = String(r[11] || '').trim().toLowerCase();
+    const isOt = rawOt === '1' || rawOt === 'true' || rawOt === 'yes';
+
+    // Status Boolean parsing: 1 / Active / TRUE -> true, 0 / Inactive / false -> false (defaults to true)
+    const rawStatus = String(r[12] !== undefined ? r[12] : '1').trim().toLowerCase();
+    const isActive = !(rawStatus === '0' || rawStatus === 'inactive' || rawStatus === 'false');
+
+    importedRecords.push({
+      id: `ws-import-${Date.now()}-${idx}`,
+      shiftGroup,
+      groupName,
+      refCode,
+      shiftCode,
+      shiftName,
+      fromTime: fromTime || '00:00',
+      toTime: toTime || '00:00',
+      value,
+      note,
+      sortOrder,
+      isOt,
+      isActive,
+      skipReport: refCode === 'OFF',
+    });
+  });
+
+  return importedRecords;
+}
+
+/**
+ * SPEC-12: Export Working Shift List to CSV
+ */
+export function exportWorkingShiftsCsv(shifts: WorkingShiftRecord[], filename = 'WorkingShiftList.csv'): void {
+  const headers = [
+    'No.',
+    'Shift Group',
+    'Group Name',
+    'Shift Code',
+    'Shift Name',
+    'OT',
+    'From',
+    'To',
+    'Value',
+    'Ref Code',
+    'Skip Report',
+    'Status',
+    'Note',
+  ];
+
+  const rows = shifts.map((s, idx) => {
+    return [
+      idx + 1,
+      `"${s.shiftGroup}"`,
+      `"${s.groupName}"`,
+      `"${s.shiftCode}"`,
+      `"${s.shiftName}"`,
+      s.isOt ? 'Yes' : 'No',
+      `"${s.fromTime}"`,
+      `"${s.toTime}"`,
+      s.value,
+      `"${s.refCode}"`,
+      s.skipReport ? 'Yes' : 'No',
+      s.isActive ? 'Active' : 'Inactive',
+      `"${s.note || ''}"`,
+    ].join(',');
+  });
+
+  const csvContent = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.setAttribute('href', url);
+  link.setAttribute('download', filename);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+
+
+
+
 export function exportExamResultsCsv(
   results: EmployeeExamResultSummary[],
   filename = 'exam_results_export.csv'
@@ -191,3 +407,8 @@ export function exportExamResultsCsv(
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
 }
+
+/**
+ * SPEC-12: Generate and download TemplateShiftList.xlsx
+ * Follows exact schema: Sheet "ShiftList", D1="SHIFT LIST", Row 3 Header cols A-M
+ */

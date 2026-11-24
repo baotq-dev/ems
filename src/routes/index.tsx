@@ -7,6 +7,7 @@ import { LoginPage } from '@/pages/auth/LoginPage';
 import { UserListPage } from '@/pages/operation-config/UserListPage';
 import { ExamListPage } from '@/pages/operation-config/ExamListPage';
 import { WorkSchedulePage } from '@/pages/planning/WorkSchedulePage';
+import { WorkingShiftPage } from '@/pages/tools/WorkingShiftPage';
 import { AttendantReportPage } from '@/pages/report/AttendantReportPage';
 import { SellOutPaReportPage } from '@/pages/report/SellOutPaReportPage';
 import { TimesheetPage } from '@/pages/report/TimesheetPage';
@@ -42,6 +43,7 @@ export const AppRoutes: React.FC = () => {
           <Route path="/operation-config/user-list" element={<UserListPage />} />
           <Route path="/operation-config/exam-list" element={<ExamListPage />} />
           <Route path="/planning/work-schedule" element={<WorkSchedulePage />} />
+          <Route path="/tools/working-shift" element={<WorkingShiftPage />} />
           <Route path="/report/attendant" element={<AttendantReportPage />} />
           <Route path="/report/sell-out-pa" element={<SellOutPaReportPage />} />
           <Route path="/report/timesheet" element={<TimesheetPage />} />

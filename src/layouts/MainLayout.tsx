@@ -12,6 +12,7 @@ import {
   LogOut,
   Menu,
   X,
+  Wrench,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useI18n } from '@/context/I18nContext';
@@ -27,6 +28,7 @@ const ICON_MAP: Record<string, React.FC<{ size?: number; className?: string }>> 
   FolderBarChart: FileBarChart,
   FileBarChart,
   Settings,
+  Wrench,
 };
 
 const NAV_TRANSLATION_MAP: Record<string, string> = {
@@ -40,6 +42,8 @@ const NAV_TRANSLATION_MAP: Record<string, string> = {
   'exam-list': 'nav.exam_list',
   planning: 'nav.planning',
   'work-schedule': 'nav.work_schedule',
+  tools: 'nav.tools',
+  'working-shift': 'nav.working_shift',
   report: 'nav.report',
   attendant: 'nav.attendant',
   timesheet: 'nav.timesheet',

@@ -85,6 +85,18 @@ export const NAVIGATION_MENU: NavMenuItem[] = [
     ],
   },
   {
+    key: 'tools',
+    label: 'Tools',
+    icon: 'Wrench',
+    children: [
+      {
+        key: 'working-shift',
+        label: 'Working Shift',
+        path: '/tools/working-shift',
+      },
+    ],
+  },
+  {
     key: 'system',
     label: 'System',
     icon: 'Settings',
