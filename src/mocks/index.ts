@@ -4,3 +4,4 @@ export * from './examMockData';
 export * from './attendantMockData';
 export * from './sellOutMockData';
 export * from './workingShiftMockData';
+export * from './categoryMockData';

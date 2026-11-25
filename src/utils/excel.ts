@@ -1,6 +1,7 @@
 import * as XLSX from 'xlsx';
 import { ExamItem, ExamQuestion, EmployeeExamResultSummary } from '@/types/exam';
 import { WorkingShiftRecord, ShiftRefCode } from '@/types/workingShift';
+import { ProductCategoryRecord } from '@/types/category';
 
 export function generateExamTemplateXlsx(): void {
   const wsData: (string | number | boolean)[][] = [
@@ -408,7 +409,49 @@ export function exportExamResultsCsv(
   URL.revokeObjectURL(url);
 }
 
+
 /**
- * SPEC-12: Generate and download TemplateShiftList.xlsx
- * Follows exact schema: Sheet "ShiftList", D1="SHIFT LIST", Row 3 Header cols A-M
+ * SPEC-13: Export Product Category List to CSV
  */
+export function exportCategoriesCsv(categories: ProductCategoryRecord[], filename = 'ProductCategoryList.csv'): void {
+  const headers = [
+    'No.',
+    'Division',
+    'Brand',
+    'Brand (VN)',
+    'Category',
+    'Category (VN)',
+    'Sub Category',
+    'Sub Category (VN)',
+    'Variant',
+    'Order',
+    'Status',
+  ];
+
+  const rows = categories.map((c, idx) => {
+    return [
+      idx + 1,
+      `"${c.division}"`,
+      `"${c.brand}"`,
+      `"${c.brandVn}"`,
+      `"${c.category}"`,
+      `"${c.categoryVn}"`,
+      `"${c.subCategory || ''}"`,
+      `"${c.subCategoryVn || ''}"`,
+      `"${c.variant || ''}"`,
+      c.sortOrder,
+      `"${c.status}"`,
+    ].join(',');
+  });
+
+  const csvContent = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.setAttribute('href', url);
+  link.setAttribute('download', filename);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}

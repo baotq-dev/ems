@@ -21,6 +21,7 @@ export const TRANSLATIONS: Record<SupportedLocale, Record<string, string>> = {
     'nav.work_schedule': 'Work Schedule',
     'nav.tools': 'Tools',
     'nav.working_shift': 'Working Shift',
+    'nav.category': 'Category',
     'nav.report': 'Report',
     'nav.attendant': 'Attendant',
     'nav.timesheet': 'Timesheet',
@@ -326,6 +327,23 @@ export const TRANSLATIONS: Record<SupportedLocale, Record<string, string>> = {
     'shift.parsed_success_count': 'Successfully parsed {count} working shift records',
     'shift.error_required': 'Please fill in all required fields (*)',
     'shift.import_empty_error': 'No valid working shift records found in file!',
+
+    // Category Module (SPEC-13)
+    'category.title': 'Category Management',
+    'category.division': 'Division',
+    'category.brand': 'Brand',
+    'category.brand_vn': 'Brand (VN)',
+    'category.category': 'Category',
+    'category.category_vn': 'Category (VN)',
+    'category.sub_category': 'Sub Category',
+    'category.sub_category_vn': 'Sub Category (VN)',
+    'category.variant': 'Variant',
+    'category.sort_order': 'Order',
+    'category.other': 'Other',
+    'category.insert_title': 'INSERT',
+    'category.update_title': 'UPDATE',
+    'category.add_new': 'Add New',
+    'category.error_required': 'Division, Brand, and Category are required.',
   },
   vi: {
     // Brand & Header
@@ -347,6 +365,7 @@ export const TRANSLATIONS: Record<SupportedLocale, Record<string, string>> = {
     'nav.work_schedule': 'Lịch làm việc',
     'nav.tools': 'Công cụ',
     'nav.working_shift': 'Ca làm việc',
+    'nav.category': 'Danh mục sản phẩm',
     'nav.report': 'Báo cáo',
     'nav.attendant': 'Chấm công',
     'nav.timesheet': 'Bảng công',
@@ -652,6 +671,23 @@ export const TRANSLATIONS: Record<SupportedLocale, Record<string, string>> = {
     'shift.parsed_success_count': 'Đã đọc thành công {count} dòng ca làm việc',
     'shift.error_required': 'Vui lòng điền đầy đủ các thông tin bắt buộc (*)',
     'shift.import_empty_error': 'Không tìm thấy dữ liệu ca làm việc hợp lệ trong file!',
+
+    // Category Module (SPEC-13)
+    'category.title': 'Quản lý Danh mục Sản phẩm',
+    'category.division': 'Ngành hàng (Division)',
+    'category.brand': 'Thương hiệu (Brand)',
+    'category.brand_vn': 'Thương hiệu (VN)',
+    'category.category': 'Danh mục (Category)',
+    'category.category_vn': 'Danh mục (VN)',
+    'category.sub_category': 'Phân loại phụ (Sub Category)',
+    'category.sub_category_vn': 'Phân loại phụ (VN)',
+    'category.variant': 'Biến thể / Quy cách (Variant)',
+    'category.sort_order': 'Thứ tự (Order)',
+    'category.other': 'Khác (Other)',
+    'category.insert_title': 'THÊM MỚI',
+    'category.update_title': 'CẬP NHẬT',
+    'category.add_new': 'Thêm mới',
+    'category.error_required': 'Vui lòng nhập Ngành hàng, Thương hiệu và Danh mục.',
   },
 };
 

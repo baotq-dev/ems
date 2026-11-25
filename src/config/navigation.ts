@@ -94,6 +94,11 @@ export const NAVIGATION_MENU: NavMenuItem[] = [
         label: 'Working Shift',
         path: '/tools/working-shift',
       },
+      {
+        key: 'category',
+        label: 'Category',
+        path: '/tools/category',
+      },
     ],
   },
   {

@@ -44,6 +44,7 @@ const NAV_TRANSLATION_MAP: Record<string, string> = {
   'work-schedule': 'nav.work_schedule',
   tools: 'nav.tools',
   'working-shift': 'nav.working_shift',
+  category: 'nav.category',
   report: 'nav.report',
   attendant: 'nav.attendant',
   timesheet: 'nav.timesheet',
