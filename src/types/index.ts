@@ -7,3 +7,5 @@ export * from './attendant';
 export * from './sellOut';
 export * from './workingShift';
 export * from './category';
+export * from './product';
+export * from './store';

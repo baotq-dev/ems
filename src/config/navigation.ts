@@ -99,6 +99,16 @@ export const NAVIGATION_MENU: NavMenuItem[] = [
         label: 'Category',
         path: '/tools/category',
       },
+      {
+        key: 'product',
+        label: 'Product',
+        path: '/tools/product',
+      },
+      {
+        key: 'store',
+        label: 'Store',
+        path: '/tools/store',
+      },
     ],
   },
   {
